@@ -1,0 +1,16 @@
+.app{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  background-color: #f0f3f7;
+  .app-content{
+    position:relative;
+    flex:1;
+    display: flex;
+    overflow: auto;
+    >div{
+      flex:1;
+    }
+  }
+}
