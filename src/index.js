@@ -8,6 +8,10 @@ import 'y-ui0/lib/style.css';
 import {L2Dwidget} from "y-live2d-widget/entry/src";
 
 L2Dwidget.init({
+    // model:{
+    //     jsonPath: getJsonPath('z16'),
+    //     // scale:1
+    // },
     dialog: {
         enable: true,
         script: {
@@ -17,6 +21,10 @@ L2Dwidget.init({
         }
     }
 });
+
+// function getJsonPath(key){
+//     return `https://unpkg.com/live2d-widget-model-${key}@1.0.5/assets/${key}.model.json`
+// }
 
 ReactDOM.render(
   <React.StrictMode>
