@@ -1,10 +1,19 @@
 .htmlCssJs{
+  margin: 16px;
   .codeMenu{
-    margin: 12px;
+    margin-bottom: 12px;
+  }
+  .codeContent{
+    width:900px;
+    height:540px;
+    background: #fff;
   }
 
   .tab{
     .tab-item{
+      &:first-child{
+        margin-left:0;
+      }
       &:hover{
         border:1px solid #00BFFF;
       }
@@ -21,7 +30,21 @@
       border:1px solid #fff;
       box-shadow: 3px 3px 6px rgba(0,0,0,0.27);
       cursor: pointer;
+      user-select: none;
       transition:all 350ms ease;
+    }
+  }
+
+  .codeBox{
+    display: flex;
+    height:100%;
+    &-item{
+      &:last-child{
+        border-right:none;
+      }
+      flex:1;
+      border-right:1px solid rgba(0,0,0,0.32);
+      padding:12px 16px;
     }
   }
 }
