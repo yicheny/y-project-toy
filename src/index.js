@@ -9,13 +9,15 @@ import {L2Dwidget} from "y-live2d-widget/entry/src";
 
 L2Dwidget.init({
     // model:{
-    //     jsonPath: getJsonPath('z16'),
-    //     // scale:1
+    //     jsonPath: getJsonPath('koharu'),
+    //     scale:0.88
     // },
+
+    //["不要动手动脚的！快把手拿开~~", "真…真的是不知羞耻！","Hentai！", "再摸的话我可要报警了！⌇●﹏●⌇", "110吗，这里有个变态一直在摸我(ó﹏ò｡)"]
     dialog: {
         enable: true,
         script: {
-            'every idle 10s': '$hitokoto$！', //显示动漫台词【使用一言语句】
+            'every idle 10s': '$hitokoto$', //显示动漫台词【使用一言语句】
             'tap body': '哎呀！别碰我！',
             'tap face': '人家已经不是小孩子了~'
         }
