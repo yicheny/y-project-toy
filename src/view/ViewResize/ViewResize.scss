@@ -1,4 +1,7 @@
 .ViewResize.ViewResize.ViewResize{
+  &.resize{
+    cursor: col-resize;
+  }
   margin:16px;
   width:900px;
   height:540px;
@@ -19,7 +22,10 @@
       height:100%;
       border-right:1px solid #fff;
     }
+    &.resize{
+      cursor: col-resize;
+    }
     padding:0 6px;
-    cursor: col-resize;
+    cursor:ew-resize;
   }
 }

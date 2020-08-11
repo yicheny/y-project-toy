@@ -1,17 +1,19 @@
 import React, { useState, useRef} from 'react';
 import './ViewResize.scss';
+import clsx from "clsx";
 
 function ViewResize(props) {
     const [canMove,setCanMove] = useState(false);
     const [htmlWidth,setHtmlWidth] = useState(450);
     const prevXRef = useRef(null);
 
-    return (<div className='ViewResize'
+    return (<div className={clsx('ViewResize',{resize:canMove})}
                  onMouseMove={handleMove}
                  onMouseLeave={()=>setCanMove(false)}
                  onMouseUp={()=>setCanMove(false)}>
         <div className="item html" style={{width:htmlWidth,height:540}}>HTML</div>
-        <div className="line" onMouseDown={()=>setCanMove(true)}/>
+        <div className={clsx("line",{resize:canMove})}
+             onMouseDown={()=>setCanMove(true)}/>
         <div className="item view" style={{width:900 - htmlWidth,height:540}}>View</div>
     </div>);
 
