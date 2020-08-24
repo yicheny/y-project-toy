@@ -12,7 +12,7 @@ const MENU_OPTION = {
     {text:'首页'},
     {text:"HTML-CSS-JS切换",to:'HtmlCssJs'},
     {text:"视图尺寸调整",to:'ViewResize'},
-    {text:"Drag事件测试",to:'EventDragTest'}
+    {text:"拖拽换行",to:'EventDragTest'}
   ]
 }
 
