@@ -7,6 +7,31 @@
   &-row{
     display: flex;
     border-bottom:1px solid #f0f0f0;
+
+    .resize-line{
+      &:hover{
+        &::before{
+          background-color:rgba(0,0,0,0.07);
+        }
+      }
+      position:relative;
+      &::before{
+        display: block;
+        content:'';
+        height:100%;
+        width:1px;
+        padding:0 3px;
+        position:absolute;
+        top:0;
+        left:-4px;
+        cursor:ew-resize;//无效
+      }
+      &.resize{//无效
+        &::before{
+          cursor: col-resize;
+        }
+      }
+    }
   }
 
   &-cell{

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import _ from 'lodash';
 import clsx from "clsx";
 import './Table.scss';
@@ -9,7 +9,12 @@ function Table(props) {
     return (<div className={clsx('pt-table',className)} style={style}>
         <div className="pt-table-header pt-table-row">
             {
-                _.map(columns,(col,i)=><Cell key={i} {...col} text={col.header}/>)
+                _.map(columns,(col,i)=>{
+                    return <Fragment>
+                        <Cell key={i} {...col} text={col.header}/>
+                        <div className='resize-line'/>
+                    </Fragment>
+                })
             }
         </div>
 
