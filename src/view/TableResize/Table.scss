@@ -24,9 +24,9 @@
         position:absolute;
         top:0;
         left:-4px;
-        cursor:ew-resize;//无效
+        cursor:ew-resize;
       }
-      &.resize{//无效
+      &.resize{
         &::before{
           cursor: col-resize;
         }

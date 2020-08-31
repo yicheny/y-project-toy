@@ -1,16 +1,22 @@
 import React, {useRef, useState} from 'react';
 import _ from 'lodash';
-import './EventDragTest.scss';
+import './EventDragRowTest.scss';
 
-const mockData = Array.from(Array(10),(x,i)=>(`这里是第${i+1}行！`));
+const mockData = Array.from(Array(10),(x,i)=>({
+    dragText:`这里是第${i+1}行拖拽区域！`,
+    fillText:`这里是第${i+1}行填充区域`
+}));
 
-function EventDragTest(props) {
+export default function EventDragRowTest(props) {
     const [data,setData] = useState(mockData);
     const dragObjRef = useRef();
 
-    return (<div className='EventDragTest'>
+    return (<div className='EventDragRowTest'>
         {data.map((x,i)=>{
-            return <DragItem key={i} value={x} dragObjRef={dragObjRef} changeOrder={changeOrder}>{x}</DragItem>
+            return <div className="row" key={i}>
+                <DragItem value={x} dragObjRef={dragObjRef} changeOrder={changeOrder}>{x.dragText}</DragItem>
+                <div style={{width:300}}>{x.fillText}</div>
+            </div>
         })}
     </div>);
 
@@ -23,8 +29,6 @@ function EventDragTest(props) {
     }
 }
 
-export default EventDragTest;
-
 function DragItem(props){
     const {children,value,changeOrder,dragObjRef} = props;
 
@@ -35,20 +39,14 @@ function DragItem(props){
                 onDragLeave={handleDragLeave}
                 onDrop={e=>handleDrop(e,value)}
                 onDragOver={e=>handleDragOver(e,value)}
-                onDragEnd={handleDragEnd}
-                // onDragStart={()=>console.log("onDragStart")}
-                // onDragEnd={()=>console.log("onDragEnd")}
-                // onDragEnter={()=>console.log("onDragEnter")}
-                // onDragExit={()=>console.log("onDragExit")}
-                // onDragLeave={()=>console.log("onDragLeave")}
-                // onDragOver={()=>console.log("onDragOver")}
-                // onDrag={()=>console.log("onDrag")}
-                >
+                onDragEnd={handleDragEnd}>
         {children}
     </div>
 
     function handleDragStart (e, o) {
         dragObjRef.current = o;
+        const rowEle = e.nativeEvent.path.slice(1,2)[0];
+        e.dataTransfer.setDragImage(rowEle,0,0);
     }
     function handleDragEnd (){
         dragObjRef.current = null;
@@ -56,19 +54,22 @@ function DragItem(props){
     function handleDragEnter (e, o){
         if (dragObjRef.current === o)
             return;
-        const ele = e.currentTarget;
+        const ele = e.currentTarget.parentElement;
         if (ele)
             ele.classList.add('dragover');
     }
     function handleDragLeave (e) {
-        const ele = e.currentTarget;
-        if (ele)
+        const ele = e.currentTarget.parentElement;
+        if (ele){
             ele.classList.remove('dragover');
+        }
     }
     function handleDrop (e, o) {
-        const ele = e.currentTarget;
-        if (ele)
+        const ele = e.currentTarget.parentElement;
+        if (ele){
             ele.classList.remove('dragover');
+        }
+
         if (dragObjRef.current === o)
             return;
         const drag = dragObjRef.current;

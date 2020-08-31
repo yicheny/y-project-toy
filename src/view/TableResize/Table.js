@@ -39,7 +39,7 @@ function Table(props) {
     </div>);
 
     function resize_start(){
-        setResize(true)
+        setResize(true);
     }
 
     function resize_move(e){
