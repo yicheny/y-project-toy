@@ -9,6 +9,7 @@ import EventDragTest from "./view/EventDragTest/EventDragTest";
 import FiberS1 from "./view/FiberStudy/FiberS1";
 import ColumnsResize from "./view/TableResize/ColumnsResize";
 import EventDragRowTest from "./view/EventDragTest/EventDragRowTest";
+import CatchError from "./view/CatchError/CatchError";
 
 const MENU_OPTION = {
   details:[
@@ -18,7 +19,8 @@ const MENU_OPTION = {
     {text:"列拖拽调整尺寸",to:'columnsResize'},
     {text:"拖拽换行",to:'EventDragTest'},
     {text:"拖拽列换行",to:'EventDragRowTest'},
-    {text:"组件渲染测试",to:'FiberS1'},
+    // {text:"组件渲染测试",to:'FiberS1'},
+    {text:'捕捉错误显示',to:'/CatchError'}
   ]
 }
 
@@ -33,6 +35,7 @@ function App(props) {
         <Route path='/EventDragRowTest' component={EventDragRowTest}/>
         <Route path='/FiberS1' component={FiberS1}/>
         <Route path='/columnsResize' component={ColumnsResize}/>
+        <Route path='/CatchError' component={CatchError}/>
         <Route component={Home}/>
       </Switch>
     </div>
