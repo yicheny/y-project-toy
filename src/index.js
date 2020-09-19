@@ -7,6 +7,16 @@ import './index.scss';
 import 'y-ui0/lib/style.css';
 import {L2Dwidget} from "y-live2d-widget/entry/src";
 
+//为L2Dwidget添加显示控制
+L2Dwidget.display = function (status){
+    const timeId = setInterval(()=>{
+        const ele = document.getElementById('live2d-widget');
+        if(!ele) return null;
+        ele.style.display = status;
+        clearInterval(timeId);
+    },100)
+}
+
 L2Dwidget.init({
     // model:{
     //     jsonPath: getJsonPath('koharu'),
@@ -27,6 +37,8 @@ L2Dwidget.init({
 // function getJsonPath(key){
 //     return `https://unpkg.com/live2d-widget-model-${key}@1.0.5/assets/${key}.model.json`
 // }
+
+L2Dwidget.display('none');
 
 ReactDOM.render(
   <React.StrictMode>

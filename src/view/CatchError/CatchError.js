@@ -1,4 +1,6 @@
 import React, { useRef, useState } from 'react';
+import { Button, TextArea } from "y-ui0";
+
 const vm = require('vm');
 
 function CatchError(props) {
@@ -6,24 +8,22 @@ function CatchError(props) {
     const codeRef = useRef();
 
     return (<div>
-        <textarea onChange={handleChange}/>
-        <button onClick={runCode}>执行代码</button>
+        <TextArea onChange={handleChange}/>
+        <Button primary onClick={runCode}>执行代码</Button>
         错误：{error}
     </div>);
 
     function runCode(){
+        setError(null);
         try{
             vm.runInThisContext(codeRef.current);
         }catch (e){
-            // console.log('捕捉到错误',e);
             setError(e.toString());
         }
     }
 
-    function handleChange(e){
-        e.stopPropagation();
-        e.preventDefault();
-        codeRef.current = e.target.value;
+    function handleChange(v){
+        codeRef.current = v;
     }
 }
 
