@@ -11,6 +11,7 @@ import ColumnsResize from "./view/TableResize/ColumnsResize";
 import EventDragRowTest from "./view/EventDragTest/EventDragRowTest";
 import CatchError from "./view/CatchError/CatchError";
 import CreateRole from "./view/Game/CreateRole";
+import GraphSimple from "./view/Echarts/graphSimple";
 
 const MENU_OPTION = {
   details:[
@@ -22,13 +23,14 @@ const MENU_OPTION = {
     {text:"拖拽列换行",to:'EventDragRowTest'},
     // {text:"组件渲染测试",to:'FiberS1'},
     {text:'捕捉错误显示',to:'CatchError'},
-    {
+    {text:'拓扑图-简单',to:'GraphSimple'}
+    /*{
       text:'G',
       expanded:true,
       children:[
         {text:'创建角色',to:'game/CreateRole'}
       ]
-    }
+    }*/
   ]
 }
 
@@ -44,6 +46,7 @@ function App(props) {
         <Route path='/FiberS1' component={FiberS1}/>
         <Route path='/columnsResize' component={ColumnsResize}/>
         <Route path='/CatchError' component={CatchError}/>
+        <Route path='/GraphSimple' component={GraphSimple}/>
 
         <Route path='/game/CreateRole' component={CreateRole}/>
         <Route component={Home}/>
