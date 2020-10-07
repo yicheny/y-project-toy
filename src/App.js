@@ -12,6 +12,7 @@ import EventDragRowTest from "./view/EventDragTest/EventDragRowTest";
 import CatchError from "./view/CatchError/CatchError";
 import CreateRole from "./view/Game/CreateRole";
 import GraphSimple from "./view/Echarts/graphSimple";
+import TreeView from './view/Tree/TreeView';
 
 const MENU_OPTION = {
   details:[
@@ -23,7 +24,8 @@ const MENU_OPTION = {
     {text:"拖拽列换行",to:'EventDragRowTest'},
     // {text:"组件渲染测试",to:'FiberS1'},
     {text:'捕捉错误显示',to:'CatchError'},
-    {text:'拓扑图-简单',to:'GraphSimple'}
+    {text:'拓扑图-简单',to:'GraphSimple'},
+    {text:'树形控件',to:'TreeView'},
     /*{
       text:'G',
       expanded:true,
@@ -47,6 +49,7 @@ function App(props) {
         <Route path='/columnsResize' component={ColumnsResize}/>
         <Route path='/CatchError' component={CatchError}/>
         <Route path='/GraphSimple' component={GraphSimple}/>
+        <Route path='/TreeView' component={TreeView}/>
 
         <Route path='/game/CreateRole' component={CreateRole}/>
         <Route component={Home}/>
