@@ -1,0 +1,28 @@
+.JsPlumbDemo2{
+  display: flex;
+  justify-content: space-around;
+  .row{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-right:12px;
+    .col{
+      &.error{
+        .icon{
+          background: red;
+        }
+      }
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .icon{
+        width:56px;
+        height:56px;
+        background: rgba(0,0,0,0.32);
+      }
+      .name{
+        margin-top:4px;
+      }
+    }
+  }
+}

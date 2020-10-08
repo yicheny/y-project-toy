@@ -13,6 +13,8 @@ import CatchError from "./view/CatchError/CatchError";
 import CreateRole from "./view/Game/CreateRole";
 import GraphSimple from "./view/Echarts/graphSimple";
 import TreeView from './view/Tree/TreeView';
+import JsPlumbDemo1 from "./view/jsPlumb/jsPlumb-demo1";
+import JsPlumbDemo2 from "./view/jsPlumb/jsPlumb-demo2";
 
 const MENU_OPTION = {
   details:[
@@ -26,6 +28,8 @@ const MENU_OPTION = {
     {text:'捕捉错误显示',to:'CatchError'},
     {text:'拓扑图-简单',to:'GraphSimple'},
     {text:'树形控件',to:'TreeView'},
+    {text:'JsPlumbDemo1',to:'JsPlumbDemo1'},
+    {text:'JsPlumbDemo2',to:'JsPlumbDemo2'},
     /*{
       text:'G',
       expanded:true,
@@ -50,6 +54,8 @@ function App(props) {
         <Route path='/CatchError' component={CatchError}/>
         <Route path='/GraphSimple' component={GraphSimple}/>
         <Route path='/TreeView' component={TreeView}/>
+        <Route path='/JsPlumbDemo1' component={JsPlumbDemo1}/>
+        <Route path='/JsPlumbDemo2' component={JsPlumbDemo2}/>
 
         <Route path='/game/CreateRole' component={CreateRole}/>
         <Route component={Home}/>

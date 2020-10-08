@@ -9,6 +9,7 @@
     "clsx": "^1.1.1",
     "echarts": "^4.9.0",
     "echarts-for-react": "^2.0.16",
+    "jsplumb": "^2.14.6",
     "lodash": "^4.17.20",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
