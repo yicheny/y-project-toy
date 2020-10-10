@@ -15,6 +15,7 @@ import GraphSimple from "./view/Echarts/graphSimple";
 import TreeView from './view/Tree/TreeView';
 import JsPlumbDemo1 from "./view/jsPlumb/jsPlumb-demo1";
 import JsPlumbDemo2 from "./view/jsPlumb/jsPlumb-demo2";
+import JsPlumbDemo3 from "./view/jsPlumb/jsPlumb-demo3";
 
 const MENU_OPTION = {
   details:[
@@ -30,6 +31,7 @@ const MENU_OPTION = {
     {text:'树形控件',to:'TreeView'},
     {text:'JsPlumbDemo1',to:'JsPlumbDemo1'},
     {text:'JsPlumbDemo2',to:'JsPlumbDemo2'},
+    {text:'JsPlumbDemo3',to:'JsPlumbDemo3'},
     /*{
       text:'G',
       expanded:true,
@@ -56,6 +58,7 @@ function App(props) {
         <Route path='/TreeView' component={TreeView}/>
         <Route path='/JsPlumbDemo1' component={JsPlumbDemo1}/>
         <Route path='/JsPlumbDemo2' component={JsPlumbDemo2}/>
+        <Route path='/JsPlumbDemo3' component={JsPlumbDemo3}/>
 
         <Route path='/game/CreateRole' component={CreateRole}/>
         <Route component={Home}/>
