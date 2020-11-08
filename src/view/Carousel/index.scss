@@ -1,0 +1,25 @@
+.Carousel-View{
+  .tips{
+    //position:relative;
+    //line-height: 32px;
+    padding:8px;
+    width:320px;
+    overflow: hidden;
+    border:1px solid gold;
+    .tipsContent{
+      display: flex;
+      .tip{
+        white-space: nowrap;
+        margin-right:24px;
+      }
+    }
+  }
+}
+
+.Carousel{
+  //position:absolute;
+  //top:0;
+  //left:0;
+  //transform: translateX(-100px);
+  //transition: transform 300ms linear;
+}
