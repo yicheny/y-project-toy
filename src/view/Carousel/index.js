@@ -10,7 +10,7 @@ function Index(props) {
     return <div  className='Carousel-View'>
         <Card title='Carousel'>
             <div className="tips">
-                <Carousel className="tipsContent">
+                <Carousel className="tipsContent" speed={100}>
                     {
                         _.map(data,(x,i)=>{
                             return <div key={i} className='tip'>第{i+1}项：{x}</div>
@@ -25,7 +25,7 @@ function Index(props) {
 export default Index;
 
 //
-function Carousel({className,style,children}){
+function Carousel({className,style,children,speed}){
     const ref = useRef();
 
     useEffect(()=>{
@@ -35,6 +35,7 @@ function Carousel({className,style,children}){
         function setAnimation(){
             const completeWidth = (ref.current.scrollWidth / 2) + 12;
             const animationName = `Carousel-`.concat(uniqKeyFor());
+            const time = completeWidth / speed;
 
             const rule = getAnimationStyle(completeWidth,animationName);
             const style = document.createElement('style');
@@ -42,7 +43,7 @@ function Carousel({className,style,children}){
             style.innerHTML = '';
             document.getElementsByTagName('head')[0].appendChild(style);
             ref.current.stylesheet = document.styleSheets[document.styleSheets.length-1];
-            ref.current.style.animation = `${5}s linear ${animationName} infinite`;
+            ref.current.style.animation = `${time}s linear ${animationName} infinite`;
             try {
                 ref.current.stylesheet.insertRule( rule , ref.current.stylesheet.rules.length);
             } catch (e) {
@@ -62,12 +63,15 @@ function Carousel({className,style,children}){
                 }
             `
         }
-    },[])
+    },[speed])
 
     return <div ref={ref} className={clsx("Carousel",className)} style={style}>
         {children}
         {children}
     </div>
+}
+Carousel.defaultProps = {
+    speed:120
 }
 
 let uniqKeyFlag = 0;
