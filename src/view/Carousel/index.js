@@ -1,10 +1,10 @@
-import React, {useEffect, useRef} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import _ from 'lodash';
 import {Card} from "y-ui0";
 import './index.scss';
 import clsx from "clsx";
 
-const data = _.times(4,(num)=>_.repeat(num,10));
+const data = _.times(3,(num)=>_.repeat(num,10));
 
 function Index(props) {
     return <div  className='Carousel-View'>
@@ -27,13 +27,16 @@ export default Index;
 //
 function Carousel({className,style,children,speed,offset}){
     const ref = useRef();
+    const [copyChildren,setCopyChildren] = useState(true);
 
     useEffect(()=>{
         // console.log('ref',ref.current.scrollWidth);
         setAnimation();
 
         function setAnimation(){
+            const viewWidth = ref.current.clientWidth;
             const completeWidth = (ref.current.scrollWidth / 2) + offset;
+            if(completeWidth < viewWidth) return setCopyChildren(false);
             const animationName = `Carousel-`.concat(uniqKeyFor());
             const time = completeWidth / speed;
 
@@ -67,7 +70,7 @@ function Carousel({className,style,children,speed,offset}){
 
     return <div ref={ref} className={clsx("Carousel",className)} style={style}>
         {children}
-        {children}
+        {copyChildren && children}
     </div>
 }
 Carousel.defaultProps = {
