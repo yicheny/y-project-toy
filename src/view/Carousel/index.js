@@ -1,4 +1,4 @@
-import React, {useEffect, useReducer, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import _ from 'lodash';
 import {Card} from "y-ui0";
 import './index.scss';
@@ -27,52 +27,51 @@ export default Index;
 //
 function Carousel({className,style,children}){
     const ref = useRef();
-    // const [,setOffset] = useState(0);
-    const [,forceUpdate] = useReducer(x=>x+1,0);
-    const offsetRef = useRef(0);
 
     useEffect(()=>{
         // console.log('ref',ref.current.scrollWidth);
+        setAnimation();
 
-        const completeWidth = ref.current.scrollWidth / 2;
+        function setAnimation(){
+            const completeWidth = (ref.current.scrollWidth / 2) + 12;
+            const animationName = `Carousel-`.concat(uniqKeyFor());
 
-        let unmount = undefined;
-
-        const play = ()=>{
-            ref.current.style.transition = `none`;
-            // ref.current.style.transition = `transform 300ms linear`;
-            ref.current.style.transform = `translateX(${offsetRef.current}px)`;
-            forceUpdate();
-
-            const timeId = setInterval(()=>{
-                // ref.current.style.transform -= ;
-                const next = offsetRef.current - 40;
-                let offsetX = completeWidth + next;
-                // console.log(next,offsetX);
-                if(offsetX >= 0){
-                    ref.current.style.transition = `transform 300ms linear`;
-                    ref.current.style.transform = `translateX(${next}px)`;
-                    offsetRef.current = next;
-                    return forceUpdate();
-                }
-                offsetX += 40;
-                ref.current.style.transition = `none`;
-                ref.current.style.transform = `translateX(${offsetX}px)`;
-                offsetRef.current = offsetX;
-                forceUpdate();
-                play();
-                clearInterval(timeId)
-            },300);
-
-            unmount = ()=>clearInterval(timeId);
+            const rule = getAnimationStyle(completeWidth,animationName);
+            const style = document.createElement('style');
+            style.type = 'text/css';
+            style.innerHTML = '';
+            document.getElementsByTagName('head')[0].appendChild(style);
+            ref.current.stylesheet = document.styleSheets[document.styleSheets.length-1];
+            ref.current.style.animation = `${5}s linear ${animationName} infinite`;
+            try {
+                ref.current.stylesheet.insertRule( rule , ref.current.stylesheet.rules.length);
+            } catch (e) {
+                console.error('Carousel报错：',e);
+            }
         }
 
-        // play();
-        return unmount;
+        function getAnimationStyle(value,animationName){
+            return `
+                @-webkit-keyframes ${animationName}{
+                    0% {
+                        transform:translateX(0);
+                    }
+                    100%{
+                        transform:translateX(-${value}px);
+                    }
+                }
+            `
+        }
     },[])
 
     return <div ref={ref} className={clsx("Carousel",className)} style={style}>
         {children}
         {children}
     </div>
+}
+
+let uniqKeyFlag = 0;
+function uniqKeyFor() {
+    uniqKeyFlag++;
+    return ''.concat('u-',(new Date()).getTime(), '-', uniqKeyFlag);
 }
