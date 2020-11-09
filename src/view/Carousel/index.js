@@ -38,7 +38,7 @@ function Carousel({className,style,children,speed,offset}){
             const completeWidth = (ref.current.scrollWidth / 2) + offset;
             if(completeWidth < viewWidth) return setCopyChildren(false);
             const animationName = `Carousel-`.concat(uniqKeyFor());
-            const time = completeWidth / speed;
+            const time = (completeWidth / speed) * 1000;
 
             const rule = getAnimationStyle(completeWidth,animationName);
             const style = document.createElement('style');
@@ -46,7 +46,7 @@ function Carousel({className,style,children,speed,offset}){
             style.innerHTML = '';
             document.getElementsByTagName('head')[0].appendChild(style);
             ref.current.stylesheet = document.styleSheets[document.styleSheets.length-1];
-            ref.current.style.animation = `${time}s linear ${animationName} infinite`;
+            ref.current.style.animation = `${time}ms linear ${animationName} infinite`;
             try {
                 ref.current.stylesheet.insertRule( rule , ref.current.stylesheet.rules.length);
             } catch (e) {
@@ -66,7 +66,7 @@ function Carousel({className,style,children,speed,offset}){
                 }
             `
         }
-    },[speed,offset])
+    },[speed,offset,children]);//children用于消息更新时重置动画
 
     return <div ref={ref} className={clsx("Carousel",className)} style={style}>
         {children}
@@ -74,7 +74,7 @@ function Carousel({className,style,children,speed,offset}){
     </div>
 }
 Carousel.defaultProps = {
-    speed:120,
+    speed:100,
     offset:0
 }
 
