@@ -1,15 +1,19 @@
 import _ from 'lodash';
 
 export default class Line{
-    constructor({ctx,x,y,unitLen,unitLenX,unitLenY,color,width}) {
-        this.ctx = ctx;
-        this.ctx.strokeStyle = _.defaultTo(color,'#000');
-        this.ctx.lineWidth = _.defaultTo(width,1);
-        this.startCoordinate = [x,y];
-        this.coordinates = [];
-        this.defaultUnitLength = _.defaultTo(unitLen,100);
-        this.defaultUnitLengthX = _.defaultTo(unitLenX,this.defaultUnitLength);
-        this.defaultUnitLengthY = _.defaultTo(unitLenY,this.defaultUnitLength);
+    constructor({canvas,x,y,unitLen,unitLenX,unitLenY,color,width}) {
+        if(canvas.getContext){
+            this.ctx = canvas.getContext('2d');
+            this.ctx.strokeStyle = _.defaultTo(color,'#000');
+            this.ctx.lineWidth = _.defaultTo(width,1);
+            this.startCoordinate = [x,y];
+            this.coordinates = [];
+            this.defaultUnitLength = _.defaultTo(unitLen,100);
+            this.defaultUnitLengthX = _.defaultTo(unitLenX,this.defaultUnitLength);
+            this.defaultUnitLengthY = _.defaultTo(unitLenY,this.defaultUnitLength);
+        }else{
+            throw new Error('Line初始化异常，不存在canvas.getContext');
+        }
     }
 
     static create(...params){
