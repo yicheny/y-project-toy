@@ -56,7 +56,7 @@ function Carousel({className,style,children,speed,offset}){
 
         function getAnimationStyle(value,animationName){
             return `
-                @-webkit-keyframes ${animationName}{
+                @keyframes ${animationName}{
                     0% {
                         transform:translateX(0);
                     }

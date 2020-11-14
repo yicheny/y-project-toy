@@ -35,7 +35,7 @@ const MENU_OPTION = {
     {text:'JsPlumbDemo2',to:'JsPlumbDemo2'},
     {text:'JsPlumbDemo3',to:'JsPlumbDemo3'},
     {text:'PlayAudio',to:'PlayAudio'},
-    {text:'跑马灯',to:'Carousel'}
+    {text:'跑马灯 Carousel',to:'Carousel'}
     /*{
       text:'G',
       expanded:true,
