@@ -38,7 +38,7 @@ L2Dwidget.init({
 //     return `https://unpkg.com/live2d-widget-model-${key}@1.0.5/assets/${key}.model.json`
 // }
 
-L2Dwidget.display('none');
+// L2Dwidget.display('none');
 
 ReactDOM.render(
   <React.StrictMode>

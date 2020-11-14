@@ -18,6 +18,7 @@ import JsPlumbDemo2 from "./view/jsPlumb/jsPlumb-demo2";
 import JsPlumbDemo3 from "./view/jsPlumb/jsPlumb-demo3";
 import PlayAudio from "./view/Audio/PlayAudio";
 import Carousel from './view/Carousel';
+import CanvasLine from "./view/myPath/canvasLine";
 
 const MENU_OPTION = {
   details:[
@@ -35,7 +36,8 @@ const MENU_OPTION = {
     {text:'JsPlumbDemo2',to:'JsPlumbDemo2'},
     {text:'JsPlumbDemo3',to:'JsPlumbDemo3'},
     {text:'PlayAudio',to:'PlayAudio'},
-    {text:'跑马灯 Carousel',to:'Carousel'}
+    {text:'跑马灯 Carousel',to:'Carousel'},
+    {text:'路径绘制 CanvasLine',to:'CanvasLine'},
     /*{
       text:'G',
       expanded:true,
@@ -65,6 +67,7 @@ function App(props) {
         <Route path='/JsPlumbDemo3' component={JsPlumbDemo3}/>
         <Route path='/PlayAudio' component={PlayAudio}/>
         <Route path='/Carousel' component={Carousel}/>
+        <Route path='/CanvasLine' component={CanvasLine}/>
 
         <Route path='/game/CreateRole' component={CreateRole}/>
         <Route component={Home}/>
