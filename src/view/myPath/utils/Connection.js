@@ -5,6 +5,7 @@ export default class Connection{
         this.canvas = document.createElement('canvas');
         this.canvas.width  = 2000;
         this.canvas.height = 2000;
+        //画布要出现在最上层才能显示，然而出现在最上层就会遮挡其他元素——使用pointerEvents = 'none';即可解决
         this.windowBox = WindowBox.create(this.canvas);
         const {x,y,width,height} = source.getBoundingClientRect();
         const {x:x2,y:y2} = target.getBoundingClientRect();
@@ -40,6 +41,7 @@ class WindowBox{
         this.box.style.zIndex = 100;
         this.box.style.height = '100%';
         this.box.style.width = '100%';
+        this.box.style.pointerEvents = 'none';
         document.body.appendChild(this.box);
     }
 
@@ -54,9 +56,15 @@ class WindowBox{
         this.box.appendChild(node);
     }
 
-    clear = (node) =>{
-        this.nodes.forEach((x)=>this.box.removeChild(x));
-        this.nodes = [];
+    clear = () =>{
+        try{
+            this.nodes.forEach((x)=> {
+                this.box.removeChild(x);
+            });
+            this.nodes = [];
+        }catch (e){
+            console.error('windowBox清除元素出现异常：',e);
+        }
     }
 
     static create(...params){
