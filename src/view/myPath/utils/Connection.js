@@ -1,16 +1,46 @@
+import _ from 'lodash'
 import Line from "./Line";
+import WindowBox from "./WindowBox";
 
 export default class Connection{
-    constructor(source,target) {
+    constructor({source,target,sourceAnchor,targetAnchor}) {
         this.canvas = document.createElement('canvas');
-        this.canvas.width  = 2000;
+        this.canvas.width  = 2000;//这里获取body动态尺寸进行设置或许会更好一些？
         this.canvas.height = 2000;
         //画布要出现在最上层才能显示，然而出现在最上层就会遮挡其他元素——使用pointerEvents = 'none';即可解决
         this.windowBox = WindowBox.create(this.canvas);
-        const {x,y,width,height} = source.getBoundingClientRect();
-        const {x:x2,y:y2} = target.getBoundingClientRect();
-        const line = Line.create({canvas:this.canvas,x:x+width,y:y+height});
-        line.lineTo(x2,y2).end();
+        this.source = source;
+        this.target = target;
+        this.sourceAnchor = _.defaultTo(sourceAnchor,null);
+        this.targetAnchor = _.defaultTo(targetAnchor,null);
+        this.renderLine();
+    }
+
+    get lineInfo() {
+        const s = this.getAnchor(this.source,this.sourceAnchor);
+        const t = this.getAnchor(this.target,this.targetAnchor);
+        this._lineInfo = {
+            targetX:t.x,
+            targetY:t.y,
+            sourceX:s.x,
+            sourceY:s.y
+        }
+        return this._lineInfo;
+    }
+
+    getAnchor = (node,key)=>{
+        const {x,y,width,height} = node.getBoundingClientRect();
+        if (key === 'Top') return {x:x + width/2,y};
+        if (key === 'Right') return { x:x + width,y:y + height/2};
+        if (key === 'Bottom') return {x:x + width/2,y:y + height};
+        if (key === 'Left') return { x,y:y + height/2};
+        return {x,y};
+    }
+
+    renderLine = ()=>{
+        const {targetX,targetY,sourceX,sourceY} = this.lineInfo;
+        const line = Line.create({canvas:this.canvas,x:sourceX,y:sourceY});
+        return line.lineTo(targetX,targetY).end();
     }
 
     static create(...params){
@@ -19,55 +49,5 @@ export default class Connection{
 
     clear = () => {
         this.windowBox.clear();
-    }
-}
-
-class WindowBox{
-    constructor(node) {
-        this.initBox();
-        this.nodes = this.getInitNodes(node);
-        this.nodes.forEach((x)=>this.addNode(x));
-    }
-
-    initBox = () => {
-        const id = 'windowBox';
-        const box = document.getElementById(id)
-        if (box) return this.box = box;
-        this.box = document.createElement('div');
-        this.box.id = id;
-        this.box.style.position = 'fixed';
-        this.box.style.top = 0;
-        this.box.style.lef = 0;
-        this.box.style.zIndex = 100;
-        this.box.style.height = '100%';
-        this.box.style.width = '100%';
-        this.box.style.pointerEvents = 'none';
-        document.body.appendChild(this.box);
-    }
-
-
-    getInitNodes(node) {
-        if (Array.isArray(node)) return node;
-        return node ? [node] : [];
-    }
-
-    addNode = (node) => {
-        this.nodes.push(node);
-        this.box.appendChild(node);
-    }
-
-    clear = () =>{
-        try{
-            this.nodes.forEach((x)=> {
-                this.box.removeChild(x);
-            });
-            this.nodes = [];
-        }catch (e){
-            console.error('windowBox清除元素出现异常：',e);
-        }
-    }
-
-    static create(...params){
-        return new WindowBox(...params);
     }
 }
