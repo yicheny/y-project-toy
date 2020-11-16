@@ -1,0 +1,21 @@
+.CanvasConnection{
+  position:relative;
+  .x1,.x2{
+    position:absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:100px;
+    height:100px;
+  }
+  .x1{
+    top:100px;
+    left:100px;
+    background: red;
+  }
+  .x2{
+    top:350px;
+    left:350px;
+    background: green;
+  }
+}
