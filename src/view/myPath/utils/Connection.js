@@ -16,6 +16,10 @@ export default class Connection{
         this.renderLine();
     }
 
+    static create(...params){
+        return new Connection(...params);
+    }
+
     get lineInfo() {
         const s = this.getAnchor(this.source,this.sourceAnchor);
         const t = this.getAnchor(this.target,this.targetAnchor);
@@ -34,17 +38,14 @@ export default class Connection{
         if (key === 'Right') return { x:x + width,y:y + height/2};
         if (key === 'Bottom') return {x:x + width/2,y:y + height};
         if (key === 'Left') return { x,y:y + height/2};
+        if (key === 'Center') return { x:x+width/2,y:y+height/2};
         return {x,y};
     }
 
     renderLine = ()=>{
         const {targetX,targetY,sourceX,sourceY} = this.lineInfo;
         const line = Line.create({canvas:this.canvas,x:sourceX,y:sourceY});
-        return line.lineTo(targetX,targetY).end();
-    }
-
-    static create(...params){
-        return new Connection(...params);
+        return line.to(targetX,targetY).end();
     }
 
     clear = () => {

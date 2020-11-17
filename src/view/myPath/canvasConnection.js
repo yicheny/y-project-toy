@@ -3,11 +3,11 @@ import './canvasConnection.scss';
 import Connection from "./utils/Connection";
 import {Select} from "y-ui0";
 
-const anchorOps = ['Top','Right','Bottom','Left'].map(x=>({text:x,value:x}));
+const anchorOps = ['Top','Right','Bottom','Left','Center'].map(x=>({text:x,value:x}));
 
 function CanvasConnection(props) {
-    const [sourceAnchor,setSourceAnchor] = useState('Right');
-    const [targetAnchor,setTargetAnchor] = useState('Left');
+    const [sourceAnchor,setSourceAnchor] = useState('Center');
+    const [targetAnchor,setTargetAnchor] = useState('Center');
 
     useEffect(()=>{
         const nodesName = ['x1','x2'];
@@ -17,7 +17,6 @@ function CanvasConnection(props) {
             return acc.concat([node]);
         },[]);
 
-        console.log(sourceAnchor,targetAnchor);
         const connect = Connection.create({source, target, sourceAnchor,targetAnchor});
         return connect.clear;
     },[sourceAnchor,targetAnchor])

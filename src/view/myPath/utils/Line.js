@@ -20,29 +20,29 @@ export default class Line{
         return new Line(...params);
     }
 
-    lineTo(x,y){
+    to(x,y){
         this.coordinates.push([x,y]);
         return this;
     }
 
     left(unitLength){
         const [x,y] = this.lastCoordinate;
-        return this.lineTo(x-this.getUnitLengthX(unitLength),y);
+        return this.to(x-this.getUnitLengthX(unitLength),y);
     }
 
     right(unitLength){
         const [x,y] = this.lastCoordinate;
-        return this.lineTo(x+this.getUnitLengthX(unitLength),y);
+        return this.to(x+this.getUnitLengthX(unitLength),y);
     }
 
     top(unitLength){
         const [x,y] = this.lastCoordinate;
-        return this.lineTo(x,y-this.getUnitLengthY(unitLength));
+        return this.to(x,y-this.getUnitLengthY(unitLength));
     }
 
     bottom(unitLength){
         const [x,y] = this.lastCoordinate;
-        return this.lineTo(x,y+this.getUnitLengthY(unitLength));
+        return this.to(x,y+this.getUnitLengthY(unitLength));
     }
 
     end(){

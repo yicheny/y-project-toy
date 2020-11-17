@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 export default class WindowBox{
     constructor(node) {
         this.initBox();

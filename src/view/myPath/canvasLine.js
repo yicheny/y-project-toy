@@ -6,11 +6,11 @@ function CanvasLine(props) {
         const canvas = document.querySelector('.canvas-line');
         // console.log(canvas);
         try{
-            // const line = Line.create({canvas,x:200,y:200,color:'green',width:3});
-            // line.right().bottom().right().bottom().left().bottom().left().top().end();
+            const line = Line.create({canvas,x:200,y:200,color:'green',width:3});
+            line.right().bottom().right().bottom().left().bottom().left().top().end();
 
-            // line.lineTo(300,200)
-            //     .lineTo(300,100)
+            // line.to(300,200)
+            //     .to(300,100)
             //     .end();
 
             // line.top().end();
@@ -21,8 +21,8 @@ function CanvasLine(props) {
             // line.right(300).end();
 
 
-            const line = Line.create({canvas,x:401,y:100});
-            line.lineTo(651,300).end();
+            // const line = Line.create({canvas,x:401,y:100});
+            // line.to(651,300).end();
         }catch(e){
             console.error(e);
         }
