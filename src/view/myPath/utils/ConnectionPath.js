@@ -24,7 +24,6 @@ export default class ConnectionPath{
             });
             // if(!path) throw new Error('ConnectionPath抛错：不存在连接路径！');
             if(!path) return ;
-            path.push([t_x,t_y])
             const elementCroods = getElementCroods(path);
             const head = elementCroods.unshift();
             const line = Line.create({canvas:this.canvas,x:head.x,y:head.y,width:2,color:'#8f8f8f'});
@@ -45,12 +44,40 @@ export default class ConnectionPath{
 }
 
 function getElementCroods(croods){
-    return _.reduce(croods,(acc,crood)=>{
+    const max = croods.length - 1;
+    return _.reduce(croods,(acc,crood,i)=>{
         const [x,y] = crood || [];
         const element = document.querySelector(`.x-${x}.y-${y}`);
         if(!element) return acc;
         const info = element.getBoundingClientRect();
-        acc.push([info.x + info.width/2,info.y + info.height/2]);
-        return acc;
+
+        if(i===0){
+            const [nextX, nextY] = croods[1];
+            return add(acc, getCrood(getChildInfo(element),x,y,nextX,nextY))
+        }
+        if(i===max){
+            const [prevX, prevY] = croods[(max-1)];
+            return add(acc,getCrood(getChildInfo(element),x,y,prevX,prevY));
+        }
+        return add(acc,getCrood(info));
     },[]);
+
+    function getChildInfo(element){
+        const childElement = _.head(element.childNodes);
+        if(!childElement) throw new Error('getElementCroods-getChildInfo报错：没有对应子元素！');
+        return childElement.getBoundingClientRect();
+    }
+
+    function add(list,item){
+        list.push(item);
+        return list;
+    }
+
+    function getCrood(info,x1,y1,x2,y2){
+        if(x2 > x1) return [info.x + info.width,info.y+info.height/2];
+        if(x2 < x1) return [info.x,info.y+info.height/2];
+        if(y2 > y1) return [info.x + info.width/2,info.y+info.height];
+        if(y2 < y1) return [info.x + info.width/2,info.y];
+        return [info.x + info.width/2,info.y + info.height/2];
+    }
 }

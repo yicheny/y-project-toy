@@ -34,7 +34,7 @@ export function createGrid({cols=9,rows=9,items}){
     _.forEach(items,item=>{
         const {x,y} = item;
         if(x>=cols || y>= rows) return null;
-        res[y][x] = 1;
+        res[y][x] = -1;
     })
     return res;
 }
