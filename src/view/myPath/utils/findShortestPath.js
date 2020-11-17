@@ -1,7 +1,6 @@
 import _ from "lodash";
 
 export default function findShortestPath({grid,source,target}){
-    console.log(grid);
     let path = null;
     const x_max_num = grid.length - 1;
     const y_max_num = grid[0].length - 1;
