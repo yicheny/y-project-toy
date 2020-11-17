@@ -1,0 +1,16 @@
+.GridDrag{
+  display: flex;
+  .box{
+    width:54px;
+    height:54px;
+    &.wall{
+      background: blue;
+    }
+    &.b1{
+      background: red;
+    }
+    &.b2{
+      background: greenyellow;
+    }
+  }
+}

@@ -21,6 +21,7 @@ import Carousel from './view/Carousel';
 import CanvasLine from "./view/myPath/canvasLine";
 import CanvasConnection from "./view/myPath/canvasConnection";
 import GridView from "./view/myPath/GridView";
+import GridDrag from "./view/myPath/GridDrag";
 
 const MENU_OPTION = {
   details:[
@@ -41,7 +42,8 @@ const MENU_OPTION = {
     {text:'跑马灯 Carousel',to:'Carousel'},
     {text:'路径绘制 CanvasLine',to:'CanvasLine'},
     {text:'连接 CanvasConnection',to:'CanvasConnection'},
-    {text:'网格 GridView',to:'GridView'},
+    {text:'网格折线连接 GridView',to:'GridView'},
+    {text:'网格拖动 GridDrag',to:'GridDrag'},
     /*{
       text:'G',
       expanded:true,
@@ -74,6 +76,7 @@ function App(props) {
         <Route path='/CanvasLine' component={CanvasLine}/>
         <Route path='/CanvasConnection' component={CanvasConnection}/>
         <Route path='/GridView' component={GridView}/>
+        <Route path='/GridDrag' component={GridDrag}/>
         <Route path='/game/CreateRole' component={CreateRole}/>
         <Route component={Home}/>
       </Switch>
