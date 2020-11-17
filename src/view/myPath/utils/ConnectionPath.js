@@ -22,7 +22,7 @@ export default class ConnectionPath{
                 source:[Number(s_x),Number(s_y)],
                 target:[Number(t_x),Number(t_y)],
             });
-            if(!path) throw new Error('ConnectionPath抛错：不存在连接路径！')
+            if(!path) throw new Error('ConnectionPath抛错：不存在连接路径！');
             path.push([t_x,t_y])
             const elementCroods = getElementCroods(path);
             const head = elementCroods.unshift();

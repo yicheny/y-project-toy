@@ -19,11 +19,10 @@ function GridView(props) {
         return [
             {x:1,y:1,element:<div className='box b1' id='b1'/>},
             {x:4,y:6,element:<div className='box b2' id='b2'/>},
+            {x:1,y:4,element:<div className='box wall'/>},
+            // {x:2,y:4,element:<div className='box wall'/>},
             {x:3,y:4,element:<div className='box wall'/>},
-            // {x:4,y:4,element:<div className='box wall'/>},
-            {x:5,y:4,element:<div className='box wall'/>},
-            {x:6,y:4,element:<div className='box wall'/>},
-            {x:7,y:4,element:<div className='box wall'/>},
+            {x:4,y:4,element:<div className='box wall'/>},
         ]
     },[]);
 
@@ -32,11 +31,15 @@ function GridView(props) {
     },[items]);
 
     useEffect(()=>{
-        const connectList = [
-            {sourceId:'b1',targetId:'b2'}
-        ]
-        const connectPath = ConnectionPath.create({grid,connectList})
-        return connectPath.clear;
+        try {
+            const connectList = [
+                {sourceId:'b1',targetId:'b2'}
+            ]
+            const connectPath = ConnectionPath.create({grid,connectList})
+            return connectPath.clear;
+        }catch ( e ){
+            console.error(e);
+        }
     },[grid]);
 
     return <div className='GridView'>
