@@ -1,39 +1,64 @@
 import _ from "lodash";
 
-export default function findShortestPath({grid,source,target,maxStep}){
+export default function findShortestPath({grid,source,target}){
     let shortestPath = null;
 
-    const x_max_num = grid.length - 1;
-    const y_max_num = grid[0].length - 1;
-    const x_min_num = 0;
-    const y_min_num = 0;
-    const max_num = _.defaultTo(maxStep,y_max_num*x_max_num);
-    const [x,y] = source;
+    const max_x = grid.length - 1;
+    const max_y = grid[0].length - 1;
+    const min_x = 0;
+    const min_y = 0;
     const [t_x,t_y] = target;
 
-    const res = findPath(x,y,[],0);
-    if(res) res.push(target);
-    return  res;
+    const nodes = [source,target];
+    const stack = [];
+    const queen = [source];
+    bsf(queen,true,0);
+    return shortestPath;
 
-    function findPath(x,y,tempPath,offset){
-        if(shortestPath && (tempPath.length >= shortestPath.length)) return;
-        if(x===t_x && y===t_y) {
-            if(shortestPath===null) return shortestPath = tempPath;
-            if(tempPath.length < shortestPath.length) return shortestPath = tempPath;
+    function bsf(queen,isLast,offset){
+        const l = _.last(queen);
+        const [x,y] = l;
+        if(shortestPath) return null;
+
+        const list = [
+            [x-1,y],[x+1,y],[x,y-1],[x,y+1]
+        ];
+        const validList = findPath(list,queen);
+
+        if(!stack[offset]) stack[offset] = [...validList];
+        else stack[offset].push(...validList);
+
+        if(isLast){
+            const len = stack[offset].length-1;
+            const nextOffset = offset+1;
+            stack[offset].forEach((q,i)=>{
+                bsf(q,i===len,nextOffset);
+            });
+            stack[offset] = null;
         }
-        if(x<x_min_num || y<y_min_num || x>x_max_num || y>y_max_num) return null;
-        let mark = grid[y][x];
-        if(offset!==0 && mark===-1) return ;
-        if(mark!==-1) mark++;
-        if(mark > max_num) return ;
-        if(_.some(tempPath,o=>o[0]===x&&o[1]===y)) return ;
-        tempPath.push([x,y]);
-        const nextOffest = offset + mark;
-        findPath(x-1,y,_.clone(tempPath),nextOffest);//左
-        findPath(x+1,y,_.clone(tempPath),nextOffest);//右
-        findPath(x,y-1,_.clone(tempPath),nextOffest);//上
-        findPath(x,y+1,_.clone(tempPath),nextOffest);//下
+    }
 
-        return shortestPath;
+    function findPath(list,queen){
+        if(shortestPath) return [];
+        const validList = [];
+
+        while(list.length){
+            const l = list.pop()
+            const [l_x,l_y] = l;
+            if(l_x === t_x && l_y === t_y) {
+                queen.push(l);
+                shortestPath = queen;
+                return [];
+            }
+            if(_.some(nodes,o=> (o[0] === l_x && o[1]===l_y))) continue;//已到达
+            if(l_x<min_x || l_x>max_x || l_y<min_y || l_y>max_y) continue;//边界
+            if(grid[l_y][l_x] === -1) continue;//墙
+            const q = _.clone(queen);
+            q.push(l);
+            nodes.push(l);
+            validList.push(q);
+        }
+
+        return validList;
     }
 }
