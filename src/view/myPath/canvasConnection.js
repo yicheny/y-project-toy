@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './canvasConnection.scss';
-import Connection from "./utils/Connection";
+import Connection from "./utils_retain/Connection";
 import {Select} from "y-ui0";
 
 const anchorOps = ['Top','Right','Bottom','Left','Center'].map(x=>({text:x,value:x}));

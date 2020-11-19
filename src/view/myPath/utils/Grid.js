@@ -19,7 +19,10 @@ export function Grid({grid,items,onChangeLocation}){
                                              dragObjRef={dragObjRef} value={{x,y,id:_.get(item,'id')}}
                                              changeOrder={_.defaultTo(onChangeLocation,()=>{})}
                                              y={y} x={x} key={x}>
-                                    {item ? <div className={clsx('item',item.className) } id={item.id}/> : null}
+                                    {item ? <div className={clsx('item',item.className) }
+                                                 onMouseDown={item.onMouseDown}
+                                                 onMouseLeave={item.onMouseLeave}
+                                                 id={item.id}/> : null}
                             </DragItem>
                         })
                     }

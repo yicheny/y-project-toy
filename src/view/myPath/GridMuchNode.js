@@ -45,7 +45,7 @@ const connectList = _.times(15,(x)=>({sourceId:`b${2*x+1}`,targetId:`b${2*x+2}`}
     {sourceId: 'b11',targetId:'b14'},
     {sourceId: 'b11',targetId:'b16'},
     {sourceId: 'b11',targetId:'b18'},
-])
+]);
 
 function GridMuchNode(props) {
     const initItems = useMemo(()=>getInitItems(),[])

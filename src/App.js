@@ -20,7 +20,7 @@ import PlayAudio from "./view/Audio/PlayAudio";
 import Carousel from './view/Carousel';
 import CanvasLine from "./view/myPath/canvasLine";
 import CanvasConnection from "./view/myPath/canvasConnection";
-import GridView from "./view/myPath/GridView";
+// import GridView from "./view/myPath/GridView";
 import GridDrag from "./view/myPath/GridDrag";
 import GridMuchNode from "./view/myPath/GridMuchNode";
 
