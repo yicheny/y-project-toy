@@ -22,6 +22,7 @@ import CanvasLine from "./view/myPath/canvasLine";
 import CanvasConnection from "./view/myPath/canvasConnection";
 import GridView from "./view/myPath/GridView";
 import GridDrag from "./view/myPath/GridDrag";
+import GridMuchNode from "./view/myPath/GridMuchNode";
 
 const MENU_OPTION = {
   details:[
@@ -44,6 +45,7 @@ const MENU_OPTION = {
     {text:'连接 CanvasConnection',to:'CanvasConnection'},
     {text:'网格折线连接 GridView',to:'GridView'},
     {text:'网格拖动 GridDrag',to:'GridDrag'},
+    {text:'多节点网格 GridMuchNode',to:'GridMuchNode'},
     /*{
       text:'G',
       expanded:true,
@@ -77,6 +79,7 @@ function App(props) {
         <Route path='/CanvasConnection' component={CanvasConnection}/>
         <Route path='/GridView' component={GridView}/>
         <Route path='/GridDrag' component={GridDrag}/>
+        <Route path='/GridMuchNode' component={GridMuchNode}/>
         <Route path='/game/CreateRole' component={CreateRole}/>
         <Route component={Home}/>
       </Switch>

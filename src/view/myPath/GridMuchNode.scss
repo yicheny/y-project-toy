@@ -1,8 +1,11 @@
-.GridDrag{
+.GridMuchNode{
   display: flex;
+  .col{
+    border:1px solid #e1e1e1;
+  }
   .box{
-    width:54px;
-    height:54px;
+    width:36px;
+    height:36px;
     &.wall{
       background: blue;
     }
