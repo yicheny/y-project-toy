@@ -4,19 +4,22 @@ import WindowBox from "./WindowBox";
 import findShortestPath from "./findShortestPath";
 
 export default class ConnectionPath{
-    constructor({grid,connectList,onError}) {
+    constructor({grid,connectList,onError,hlCrood}) {
         this.canvas = document.createElement('canvas');
         this.canvas.width  = 2000;//这里获取body动态尺寸进行设置或许会更好一些？
         this.canvas.height = 2000;
         this.windowBox = WindowBox.create(this.canvas);
 
         try{
+            const [h_x,h_y] = hlCrood || [-1,-1];
             _.forEach(connectList,(o)=>{
-                const path = getElementPath(o,grid);
-                const elementCroods = getElementBrowerCroods(path);
-                const head = elementCroods.unshift();
-                const line = Line.create({canvas:this.canvas,x:head.x,y:head.y,width:2,color:'#8f8f8f'});
-                _.forEach(elementCroods,([x,y])=>{
+                const [x1, y1, x2, y2] = getCroods(o);
+                const isHl = (x1===h_x && y1 === h_y) || (x2===h_x && y2 === h_y);
+                const path = getPath({ x1, y1, x2, y2, grid });
+                const browerCroods = getElementBrowerCroods(path);
+                const head = browerCroods.unshift();
+                const line = Line.create({canvas:this.canvas,x:head.x,y:head.y,width:2,color:isHl ? '#00FF00' : '#8f8f8f'});
+                _.forEach(browerCroods,([x,y])=>{
                     line.to(x,y);
                 });
                 return line.end();
@@ -38,17 +41,20 @@ export default class ConnectionPath{
 }
 
 //
-function getElementPath(o,grid){
+function getCroods(o){
     const {targetId,sourceId} = o || {};
     const source = document.getElementById(sourceId);
     const target = document.getElementById(targetId);
     if(!source || !target) throw new Error('ConnectionPath抛错：指定元素不存在！');
     const {x:s_x,y:s_y} = source.parentElement.dataset;
     const {x:t_x,y:t_y} = target.parentElement.dataset;
+    return [Number(s_x),Number(s_y), Number(t_x),Number(t_y)]
+}
+function getPath({ x1, y1, x2, y2, grid }){
     const path = findShortestPath({
         grid,
-        source:[Number(s_x),Number(s_y)],
-        target:[Number(t_x),Number(t_y)],
+        source:[x1,y1],
+        target:[x2,y2],
     });
     if(!path) throw new Error('ConnectionPath抛错：不存在连接路径！');
     return path;

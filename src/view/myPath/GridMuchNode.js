@@ -50,6 +50,7 @@ const connectList = _.times(15,(x)=>({sourceId:`b${2*x+1}`,targetId:`b${2*x+2}`}
 function GridMuchNode(props) {
     const initItems = useMemo(()=>getInitItems(),[])
     const [items,setItems] = useState(initItems);
+    const [hlCrood,setHlCrood] = useState();
     const prevItemsRef = useRef();
 
     const grid = useMemo(()=>{
@@ -57,7 +58,7 @@ function GridMuchNode(props) {
     },[items]);
 
     useEffect(()=>{
-        const connectPath = ConnectionPath.create({grid,connectList,onError})
+        const connectPath = ConnectionPath.create({grid,connectList,onError,hlCrood})
         return connectPath.clear;
 
         function onError(error){
@@ -65,11 +66,20 @@ function GridMuchNode(props) {
             setItems(prevItemsRef.current);
             message.show({info:'此次拖动回导致路径无法连接，禁止操作！'})
         }
-    },[grid]);
+    },[grid,hlCrood]);
+
+    const renderItems = useMemo(()=>{
+        return _.map(items,x=>{
+            return _.defaults(x,{
+                onMouseEnter:setHlCrood,
+                onMouseLeave:()=>setHlCrood(null)
+            });
+        })
+    },[items]);
 
     return (
         <div className='GridMuchNode'>
-            <Grid grid={grid} items={items} onChangeLocation={onChangeLocation}/>
+            <Grid grid={grid} items={renderItems} onChangeLocation={onChangeLocation}/>
         </div>
     );
 

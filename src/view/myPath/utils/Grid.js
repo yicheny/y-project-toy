@@ -1,7 +1,10 @@
 import React, { useRef } from "react";
 import _ from "lodash";
+import fp from 'lodash/fp';
 import './Grid.scss';
 import clsx from "clsx";
+
+const defaultFn = fp.defaultTo(()=>{});
 
 export function Grid({grid,items,onChangeLocation}){
     const dragObjRef = useRef();
@@ -20,8 +23,8 @@ export function Grid({grid,items,onChangeLocation}){
                                              changeOrder={_.defaultTo(onChangeLocation,()=>{})}
                                              y={y} x={x} key={x}>
                                     {item ? <div className={clsx('item',item.className) }
-                                                 onMouseDown={item.onMouseDown}
-                                                 onMouseLeave={item.onMouseLeave}
+                                                 onMouseEnter={()=>defaultFn(item.onMouseEnter)([x,y])}
+                                                 onMouseLeave={()=>defaultFn(item.onMouseLeave)([x,y])}
                                                  id={item.id}/> : null}
                             </DragItem>
                         })
