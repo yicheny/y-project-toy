@@ -1,11 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import _ from 'lodash';
 import { createGrid, Grid } from "./utils/Grid";
 import ConnectionPath from "./utils/ConnectionPath";
 import './GridDrag.scss';
 import { uniqKeyFor } from "../../utils/publickFun";
 import { message } from "y-ui0";
-import { getElementPath } from "./utils/utils";
 
 const getInitItems = function (){
     return _.cloneDeep( [
@@ -27,14 +26,21 @@ const connectList = [
 function GridDrag(props) {
     const initItems = useMemo(()=>getInitItems(),[])
     const [items,setItems] = useState(initItems);
+    const prevItemsRef = useRef();
 
     const grid = useMemo(()=>{
         return createGrid({cols:10,rows:10,items})
     },[items]);
 
     useEffect(()=>{
-        const connectPath = ConnectionPath.create({grid,connectList})
+        const connectPath = ConnectionPath.create({grid,connectList,onError})
         return connectPath.clear;
+
+        function onError(error){
+            if(_.isNil(prevItemsRef.current)) return console.error('没有存储上一次的布局信息！');
+            setItems(prevItemsRef.current);
+            message.show({info:'此次拖动回导致路径无法连接，禁止操作！'})
+        }
     },[grid]);
 
     return (
@@ -50,19 +56,10 @@ function GridDrag(props) {
         const {id} = source;
         const item = _.find(items,x=>x.id===id);
         if(!item) return console.error("拖动出现异常!");
-        const {x:i_x,y:i_y} = item;
+        prevItemsRef.current = _.cloneDeep(items);
         item.x = t_x;
         item.y = t_y;
-        const grid = createGrid({cols:10,rows:10,items});
-        try{
-            connectList.forEach((o)=>getElementPath(o,grid));
-            setItems(_.clone(items));
-        }catch ( e ){
-            console.error(e);
-            item.x = i_x;
-            item.y = i_y;
-            message.show({info:'此次拖动会导致路径无法连接!'})
-        }
+        setItems(_.clone(items));
     }
 }
 

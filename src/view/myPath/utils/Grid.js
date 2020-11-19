@@ -46,7 +46,7 @@ function DragItem(props){
     return <div className={clsx("dragItem",className)}
                 data-x={x}
                 data-y={y}
-                draggable
+                draggable={!!children}
                 onDragStart={e=>handleDragStart(e,value)}
                 onDragEnter={e=>handleDragEnter(e,value)}
                 onDragLeave={handleDragLeave}
