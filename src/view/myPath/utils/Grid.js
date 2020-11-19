@@ -19,7 +19,7 @@ export function Grid({grid,items,onChangeLocation}){
                                              dragObjRef={dragObjRef} value={{x,y,id:_.get(item,'id')}}
                                              changeOrder={_.defaultTo(onChangeLocation,()=>{})}
                                              y={y} x={x} key={x}>
-                                    {item ? item.element : null}
+                                    {item ? <div className={clsx('item',item.className) } id={item.id}/> : null}
                             </DragItem>
                         })
                     }

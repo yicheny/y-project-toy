@@ -1,15 +1,15 @@
 .GridView{
   display: flex;
-  .box{
+  .item{
     width:54px;
     height:54px;
     &.wall{
       background: blue;
     }
-    &.b1{
+    &.source{
       background: red;
     }
-    &.b2{
+    &.target{
       background: greenyellow;
     }
   }

@@ -43,7 +43,7 @@ const MENU_OPTION = {
     {text:'跑马灯 Carousel',to:'Carousel'},
     {text:'路径绘制 CanvasLine',to:'CanvasLine'},
     {text:'连接 CanvasConnection',to:'CanvasConnection'},
-    {text:'网格折线连接 GridView',to:'GridView'},
+    // {text:'网格折线连接 GridView',to:'GridView'},
     {text:'网格拖动 GridDrag',to:'GridDrag'},
     {text:'多节点网格 GridMuchNode',to:'GridMuchNode'},
     /*{
@@ -77,7 +77,7 @@ function App(props) {
         <Route path='/Carousel' component={Carousel}/>
         <Route path='/CanvasLine' component={CanvasLine}/>
         <Route path='/CanvasConnection' component={CanvasConnection}/>
-        <Route path='/GridView' component={GridView}/>
+        {/*<Route path='/GridView' component={GridView}/>*/}
         <Route path='/GridDrag' component={GridDrag}/>
         <Route path='/GridMuchNode' component={GridMuchNode}/>
         <Route path='/game/CreateRole' component={CreateRole}/>

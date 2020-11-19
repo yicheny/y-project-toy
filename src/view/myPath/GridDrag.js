@@ -8,14 +8,14 @@ import { message } from "y-ui0";
 
 const getInitItems = function (){
     return _.cloneDeep( [
-        {x:1,y:1,element:<div className='box source' id='b1'/>,id:'b1'},
-        {x:4,y:6,element:<div className='box target' id='b2'/>,id:'b2'},
-        {x:4,y:4,element:<div className='box wall'/>,id:uniqKeyFor()},
-        {x:5,y:4,element:<div className='box wall'/>,id:uniqKeyFor()},
-        {x:6,y:4,element:<div className='box wall'/>,id:uniqKeyFor()},
-        {x:3,y:5,element:<div className='box wall'/>,id:uniqKeyFor()},
-        {x:3,y:6,element:<div className='box wall'/>,id:uniqKeyFor()},
-        {x:3,y:7,element:<div className='box wall'/>,id:uniqKeyFor()},
+        {x:1,y:1,id:'b1',className: 'source'},
+        {x:4,y:6,id:'b2',className: 'target'},
+        {x:4,y:4,id:uniqKeyFor(),className:'wall'},
+        {x:5,y:4,id:uniqKeyFor(),className:'wall'},
+        {x:6,y:4,id:uniqKeyFor(),className:'wall'},
+        {x:3,y:5,id:uniqKeyFor(),className:'wall'},
+        {x:3,y:6,id:uniqKeyFor(),className:'wall'},
+        {x:3,y:7,id:uniqKeyFor(),className:'wall'},
     ])
 };
 

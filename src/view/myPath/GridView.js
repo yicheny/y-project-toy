@@ -6,12 +6,12 @@ import { createGrid, Grid } from "./utils/Grid";
 function GridView(props) {
     const items = useMemo(()=>{
         return [
-            {x:1,y:1,element:<div className='box b1' id='b1'/>},
-            {x:4,y:6,element:<div className='box b2' id='b2'/>},
-            {x:1,y:4,element:<div className='box wall'/>},
-            // {x:2,y:4,element:<div className='box wall'/>},
-            {x:3,y:4,element:<div className='box wall'/>},
-            {x:4,y:4,element:<div className='box wall'/>},
+            {x:1,y:1,className: 'source',id:'b1'},
+            {x:4,y:6,className: 'target',id:'b2'},
+            {x:1,y:4,className:'wall'},
+            {x:2,y:4,className:'wall'},
+            {x:3,y:4,className:'wall'},
+            {x:4,y:4,className:'wall'},
         ]
     },[]);
 
