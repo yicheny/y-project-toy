@@ -8,10 +8,6 @@ const isSameNode = _.curry(function (n1,n2){
     if(!_.isArray(n1) || !_.isArray(n2)) return false;
     return (n1[0] === n2[0]) && (n1[1] === n2[1]);
 })
-const isHalfSameNode = _.curry(function (n1,n2){
-    if(!_.isArray(n1) || !_.isArray(n2)) return false;
-    return (n1[0] === n2[0]) && (n1[1] === n2[1]);
-})
 function hasSameNode(path,targetNode){
     return path.some(isSameNode(targetNode));
 }
@@ -28,7 +24,7 @@ function getSameNodeIndex(path,targetNode){
 
 function checkAcross(prev1,next1,prev2,next2){
     if(!isSameDirection(prev1,next1) || !isSameDirection(prev2,next2)) return false;
-    return !(isHalfSameNode(prev1,prev2) || isHalfSameNode(prev1,next2) || isHalfSameNode(next1,prev2) || isHalfSameNode(next1,next2))
+    return !(isSameNode(prev1,prev2) || isSameNode(prev1,next2) || isSameNode(next1,prev2) || isSameNode(next1,next2))
 }
 
 function isSameDirection(n1,n2){
