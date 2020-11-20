@@ -6,8 +6,22 @@ function CanvasLine(props) {
         const canvas = document.querySelector('.canvas-line');
         // console.log(canvas);
         try{
-            const line = Line.create({canvas,x:200,y:200,color:'green',width:3});
-            line.right().bottom().right().bottom().left().bottom().left().top().end();
+            const ctx = canvas.getContext('2d');
+            ctx.beginPath();
+            //横向弯曲
+            // ctx.moveTo(0,100);
+            // ctx.lineTo(50,100)
+            // ctx.moveTo(150,100);
+            // ctx.arc(100,100, 50, 0, Math.PI, true);
+
+            ctx.moveTo(100,0);
+            ctx.lineTo(100,50);
+            ctx.moveTo(100,150);
+            ctx.arc(100,100, 50, Math.PI*0.5, Math.PI*1.5, true);
+            ctx.stroke();
+
+            // const line = Line.create({canvas,x:200,y:200,color:'green',width:3});
+            // line.right().bottom().right().bottom().left().bottom().left().top().end();
 
             // line.to(300,200)
             //     .to(300,100)
