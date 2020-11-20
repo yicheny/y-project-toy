@@ -5,17 +5,32 @@ import findShortestPath from "./findShortestPath";
 
 export default class ConnectionPath{
     constructor({grid,connectList,onError,hlCrood}) {
+        this.initCanvas();
+
+        this.grid = grid;
+        this.connectList = connectList;
+        this.onError = onError;
+        this.hlCrood = hlCrood;
+
+        this.render(hlCrood);
+    }
+
+    static create(...params){
+        return new ConnectionPath(...params);
+    }
+
+    initCanvas = () => {
         this.canvas = document.createElement('canvas');
         this.canvas.width  = 2000;//这里获取body动态尺寸进行设置或许会更好一些？
         this.canvas.height = 2000;
         this.windowBox = WindowBox.create(this.canvas);
+    }
 
+    render = ()=>{
         try{
-            const [h_x,h_y] = hlCrood || [-1,-1];
-            _.forEach(connectList,(o)=>{
-                const [x1, y1, x2, y2] = getCroods(o);
-                const isHl = (x1===h_x && y1 === h_y) || (x2===h_x && y2 === h_y);
-                const path = getPath({ x1, y1, x2, y2, grid });
+            _.forEach(this.renderList,(o)=>{
+                const {x1, y1, x2, y2,isHl} = o;
+                const path = getPath({ x1, y1, x2, y2, grid:this.grid });
                 const browerCroods = getElementBrowerCroods(path);
                 const head = browerCroods.unshift();
                 const line = Line.create({canvas:this.canvas,x:head.x,y:head.y,width:2,color:isHl ? '#00FF00' : '#8f8f8f'});
@@ -25,13 +40,24 @@ export default class ConnectionPath{
                 return line.end();
             })
         }catch(e){
-            if(!_.isFunction(onError)) return console.error('ConnectionPath渲染报错：',e);
-            onError(e);
+            if(!_.isFunction(this.onError)) return console.error('ConnectionPath渲染报错：',e);
+            this.onError(e);
         }
     }
 
-    static create(...params){
-        return new ConnectionPath(...params);
+    get renderList(){
+        const [h_x,h_y] = this.hlCrood || [-1,-1];
+        const hlConnectList = [];
+        const normalConnectList = [];
+
+        _.forEach(this.connectList,o=>{
+            const [x1, y1, x2, y2] = getCroods(o);
+            const isHl = (x1===h_x && y1 === h_y) || (x2===h_x && y2 === h_y);
+            const info = {x1,y1,x2,y2,isHl};
+            return isHl ? hlConnectList.push(info) : normalConnectList.push(info);
+        })
+
+        return normalConnectList.concat(hlConnectList);
     }
 
     clear = () => {
