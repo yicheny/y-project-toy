@@ -5,6 +5,7 @@ import ConnectionPath from "./utils/ConnectionPath";
 import './GridMuchNode.scss';
 import { message } from "y-ui0";
 
+//7,6
 const getInitItems = function (){
     return _.cloneDeep( [
         {x:3,y:3,id:'b1',className:'source'},
@@ -17,8 +18,8 @@ const getInitItems = function (){
         {x:5,y:4,id:'b15',className:'source'},
         {x:7,y:4,id:'b17',className:'source'},
         {x:11,y:4,id:'b19',className:'source'},
-        {x:1,y:7,id:'b21',className:'source'},
-        {x:3,y:7,id:'b23',className:'source'},
+        {x:1,y:9,id:'b21',className:'source'},
+        {x:1,y:7,id:'b23',className:'source'},
         {x:5,y:7,id:'b25',className:'source'},
         {x:6,y:8,id:'b27',className:'source'},
         {x:9,y:7,id:'b29',className:'source'},
@@ -26,14 +27,14 @@ const getInitItems = function (){
         {x:2,y:1,id:'b4',className:'target'},
         {x:4,y:1,id:'b6',className:'target'},
         {x:6,y:1,id:'b8',className:'target'},
-        {x:9,y:2,id:'b10',className:'target'},
+        {x:7,y:6,id:'b10',className:'target'},
         {x:0,y:4,id:'b12',className:'target'},
         {x:2,y:4,id:'b14',className:'target'},
         {x:5,y:6,id:'b16',className:'target'},
         {x:6,y:4,id:'b18',className:'target'},
         {x:8,y:4,id:'b20',className:'target'},
-        {x:0,y:7,id:'b22',className:'target'},
-        {x:2,y:7,id:'b24',className:'target'},
+        {x:0,y:8,id:'b22',className:'target'},
+        {x:2,y:8,id:'b24',className:'target'},
         {x:5,y:9,id:'b26',className:'target'},
         {x:4,y:8,id:'b28',className:'target'},
         {x:8,y:7,id:'b30',className:'target'},
@@ -62,7 +63,7 @@ function GridMuchNode(props) {
         return connectPath.clear;
 
         function onError(error){
-            // console.log(error);
+            console.error(error);
             if(_.isNil(prevItemsRef.current)) return console.error('没有存储上一次的布局信息！');
             setItems(prevItemsRef.current);
             message.show({info:'此次拖动回导致路径无法连接，禁止操作！'})

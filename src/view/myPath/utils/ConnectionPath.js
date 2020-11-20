@@ -10,10 +10,14 @@ const isSameNode = _.curry(function (n1,n2){
 })
 const isHalfSameNode = _.curry(function (n1,n2){
     if(!_.isArray(n1) || !_.isArray(n2)) return false;
-    return (n1[0] === n2[0]) || (n1[1] === n2[1]);
+    return (n1[0] === n2[0]) && (n1[1] === n2[1]);
 })
 function hasSameNode(path,targetNode){
     return path.some(isSameNode(targetNode));
+}
+function getSameNodeIndex(path,targetNode){
+    if(!hasSameNode(path,targetNode)) return -1;
+    return _.findIndex(path,isSameNode(targetNode));
 }
 
 //后续待完善功能
@@ -21,6 +25,15 @@ function hasSameNode(path,targetNode){
 //2. 十字交叉曲线
 //3. 箭头
 //4. 线点击事件
+
+function checkAcross(prev1,next1,prev2,next2){
+    if(!isSameDirection(prev1,next1) || !isSameDirection(prev2,next2)) return false;
+    return !(isHalfSameNode(prev1,prev2) || isHalfSameNode(prev1,next2) || isHalfSameNode(next1,prev2) || isHalfSameNode(next1,next2))
+}
+
+function isSameDirection(n1,n2){
+    return n1[0] === n2[0] || n1[1] === n2[1]
+}
 
 export default class ConnectionPath{
     constructor({grid,connectList,onError,hlCrood}) {
@@ -55,22 +68,30 @@ export default class ConnectionPath{
                 path.forEach((node,i)=>{
                     if(i===0 || i===path.length-1) return ;
                     const isAcross =  pathQueens.some((p,pi)=>{
-                        const isArise = hasSameNode(p,node);
+                        const isExist = hasSameNode(p,node)
+                        // console.log(sameNodeIndex);
                         // console.log(pi,p.length,p,node,isArise)
-                        if(!isArise) return false;
+                        if(!isExist) return false;
                         const prev1 = path[i-1];
                         const next1 = path[i+1];
-                        const prev2 = p.length <= 1 ? undefined : p[i-1];
-                        const next2 = p[i+1];
+                        const sameIndex = getSameNodeIndex(p,node);
+                        // console.log(sameIndex);
+                        const prev2 = sameIndex===-1 ? undefined : p[sameIndex-1];
+                        const next2 = sameIndex===-1 ? undefined : p[sameIndex+1];
+                        if(isSameNode([1,8],node)){
+                            console.log(prev1,next1,prev2,next2)
+                        }
                         //const checkRes = !isHalfSameNode(prev1,prev2) && !isHalfSameNode(prev1,next2) && !isHalfSameNode(next1,prev2) && !isHalfSameNode(next1,next2);
-                        // console.log('checkRes',checkRes,prev1,next1,prev2,next2)
-                        return !isHalfSameNode(prev1,prev2) && !isHalfSameNode(prev1,next2) && !isHalfSameNode(next1,prev2) && !isHalfSameNode(next1,next2);
+                        // console.log('checkRes',checkRes,prev1,next1,prev2,next2);
+                        return checkAcross(prev1,next1,prev2,next2);
+                        // return true;
                     });
                     if(isAcross) acrossCroods.push(node);
                 })
                 // if(!_.isEmpty(acrossCroods)) console.log(acrossCroods);
-                const validPath = path.slice(1,-1);
-                if(validPath.length) pathQueens.push(validPath);
+                // const validPath = path.slice(1,-1);
+                // if(validPath.length) pathQueens.push(validPath);
+                pathQueens.push(path);
 
                 const browerCroods = getElementBrowerCroods(path,acrossCroods);
                 const head = browerCroods.unshift();
