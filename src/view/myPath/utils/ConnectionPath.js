@@ -74,9 +74,9 @@ export default class ConnectionPath{
                         // console.log(sameIndex);
                         const prev2 = sameIndex===-1 ? undefined : p[sameIndex-1];
                         const next2 = sameIndex===-1 ? undefined : p[sameIndex+1];
-                        if(isSameNode([1,8],node)){
-                            console.log(prev1,next1,prev2,next2)
-                        }
+                        // if(isSameNode([1,8],node)){
+                        //     console.log(prev1,next1,prev2,next2)
+                        // }
                         //const checkRes = !isHalfSameNode(prev1,prev2) && !isHalfSameNode(prev1,next2) && !isHalfSameNode(next1,prev2) && !isHalfSameNode(next1,next2);
                         // console.log('checkRes',checkRes,prev1,next1,prev2,next2);
                         return checkAcross(prev1,next1,prev2,next2);

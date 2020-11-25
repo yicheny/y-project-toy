@@ -1,6 +1,6 @@
 .CanvasConnection{
   position:relative;
-  .x1,.x2{
+  #x1,#x2{
     position:absolute;
     display: flex;
     justify-content: center;
@@ -8,12 +8,12 @@
     width:100px;
     height:100px;
   }
-  .x1{
+  #x1{
     top:100px;
     left:100px;
     background: red;
   }
-  .x2{
+  #x2{
     top:350px;
     left:350px;
     background: green;
