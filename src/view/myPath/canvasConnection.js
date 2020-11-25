@@ -1,9 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import './canvasConnection.scss';
-import Connection from "./utils_retain/Connection";
 import { message, Select } from "y-ui0";
 import { createGrid, Grid } from "./utils/Grid";
 import _ from "lodash";
+import ConnectionContainer from "./utils_retain/ConnectionContainer";
 
 const anchorOps = ['Top','Right','Bottom','Left','Center'].map(x=>({text:x,value:x}));
 
@@ -54,8 +54,8 @@ function CanvasConnection(props) {
         return createGrid({cols:10,rows:10,items});
     },[items]);
 
-    useEffect(()=>{
-        const connect = Connection.create({
+    const getConnectionParams = useCallback(()=>{
+        return {
             options:[
                 {sourceId:'x0', targetId:'x1', sourceAnchor: 'Right',targetAnchor: 'Left'},
                 {sourceId:'x1', targetId:'x2', sourceAnchor,targetAnchor},
@@ -76,9 +76,8 @@ function CanvasConnection(props) {
             targetTurnLen:60,
             lineColor:color,
             lineWidth:size
-        });
-        return connect.clear;
-    },[sourceAnchor,targetAnchor,items,type,color,size]);
+        }
+    },[sourceAnchor,targetAnchor,type,color,size])
 
     return (<div className='CanvasConnection'>
         <div className="inputs">
@@ -89,7 +88,9 @@ function CanvasConnection(props) {
             线宽：<Select options={sizeOps} defaultValue={size} onChange={setSize}/>
         </div>
         <div className="gridWrap">
-            <Grid grid={grid} items={items} onChangeLocation={onChangeLocation}/>
+            <ConnectionContainer params={getConnectionParams()}>
+                <Grid grid={grid} items={items} onChangeLocation={onChangeLocation}/>
+            </ConnectionContainer>
         </div>
     </div>);
 
