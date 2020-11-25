@@ -1,21 +1,25 @@
 .CanvasConnection{
-  position:relative;
+  display: flex;
+  flex-direction: column;
+  .inputs{
+
+  }
+  .gridWrap{
+    flex:1;
+    display: flex;
+  }
+
   #x1,#x2{
-    position:absolute;
     display: flex;
     justify-content: center;
     align-items: center;
-    width:100px;
-    height:100px;
+    width:40px;
+    height:40px;
   }
   #x1{
-    top:100px;
-    left:100px;
     background: red;
   }
   #x2{
-    top:350px;
-    left:350px;
     background: green;
   }
 }
