@@ -9,16 +9,17 @@ const anchorOps = ['Top','Right','Bottom','Left','Center'].map(x=>({text:x,value
 
 const getInitItems = function (){
     return _.cloneDeep( [
-        {x:0,y:2,id:'x0',children:'x0'},
-        {x:1,y:2,id:'x1',children:'x1'},
-        {x:2,y:3,id:'x2',children:'x2'},
-        {x:2,y:1,id:'x3',children:'x3'},
-        {x:3,y:0,id:'x4',children:'x4'},
-        {x:3,y:2,id:'x5',children:'x5'},
-        {x:4,y:1,id:'x6',children:'x6'},
-        {x:5,y:1,id:'x7',children:'x7'},
-        {x:6,y:1,id:'x8',children:'x8'},
-        {x:7,y:2,id:'x9',children:'x9'},
+        {x:0,y:4,id:'x0',children:'x0'},
+        {x:1,y:4,id:'x1',children:'x1'},
+        {x:2,y:6,id:'x2',children:'x2'},
+        {x:2,y:2,id:'x3',children:'x3'},
+        {x:3,y:1,id:'x4',children:'x4'},
+        {x:3,y:4,id:'x5',children:'x5'},
+        {x:4,y:2,id:'x6',children:'x6'},
+        {x:5,y:2,id:'x7',children:'x7'},
+        {x:6,y:2,id:'x8',children:'x8'},
+        {x:7,y:3,id:'x9',children:'x9'},
+        {x:8,y:4,id:'x10',children:'x10'},
     ])
 };
 
@@ -45,18 +46,21 @@ function CanvasConnection(props) {
                 {sourceId:'x6', targetId:'x7', sourceAnchor: 'Right',targetAnchor: 'Left'},
                 {sourceId:'x7', targetId:'x8', sourceAnchor: 'Right',targetAnchor: 'Left'},
                 {sourceId:'x8', targetId:'x9', sourceAnchor: 'Right',targetAnchor: 'Left'},
-                {sourceId:'x2', targetId:'x9', sourceAnchor: 'Right',targetAnchor: 'Left'},
+                {sourceId:'x9', targetId:'x10', sourceAnchor: 'Right',targetAnchor: 'Left'},
+                {sourceId:'x2', targetId:'x10', sourceAnchor: 'Right',targetAnchor: 'Left'},
+                {sourceId:'x5', targetId:'x9', sourceAnchor: 'Bottom',targetAnchor: 'Left'},
+                {sourceId:'x4', targetId:'x9', sourceAnchor: 'Top',targetAnchor: 'Left'},
             ],
             type:'flow',
-            targetTurnLen:20,
+            targetTurnLen:60,
         });
         return connect.clear;
     },[sourceAnchor,targetAnchor,items])
 
     return (<div className='CanvasConnection'>
         <div className="inputs">
-            起始点方向：<Select options={anchorOps} defaultValue={sourceAnchor} onChange={setSourceAnchor}/>
-            目标点方向：<Select options={anchorOps} defaultValue={targetAnchor} onChange={setTargetAnchor}/>
+            起始点方向：<Select disabled options={anchorOps} defaultValue={sourceAnchor} onChange={setSourceAnchor}/>
+            目标点方向：<Select disabled options={anchorOps} defaultValue={targetAnchor} onChange={setTargetAnchor}/>
         </div>
         <div className="gridWrap">
             <Grid grid={grid} items={items} onChangeLocation={onChangeLocation}/>

@@ -3,7 +3,7 @@ import Line from "../utils/Line";
 import WindowBox from "../utils/WindowBox";
 
 export default class Connection{
-    constructor({ options, type }) {
+    constructor({ options, type, targetTurnLen }) {
         this.canvas = document.createElement('canvas');
         this.canvas.width  = 2000;//这里获取body动态尺寸进行设置或许会更好一些？
         this.canvas.height = 2000;
@@ -11,6 +11,10 @@ export default class Connection{
         this.windowBox = WindowBox.create(this.canvas);
         this.type = _.defaultTo(type,'line');
         this.options = options;
+        this.lineParams = {
+            canvas:this.canvas,
+            targetTurnLen
+        }
         this.render();
     }
 
@@ -20,7 +24,7 @@ export default class Connection{
 
     get lineRender(){
         const lineClass = ConnectionFactory.create(this.type);
-        return  (...params) => lineClass.create(this.canvas,...params);
+        return  (options) => lineClass.create(_.assign(this.lineParams,options));
     }
 
     render = ()=>{
@@ -52,12 +56,14 @@ class ConnectionFactory{
 
 //子类
 class ConnectionLine{
-    constructor(canvas,{sourceId,targetId,sourceAnchor,targetAnchor}) {
+    constructor({canvas,sourceId,targetId,sourceAnchor,targetAnchor,targetTurnLen}) {
         this.canvas = canvas;
         this.source = document.getElementById(sourceId);
         this.target = document.getElementById(targetId);
         this.sourceAnchor = _.defaultTo(sourceAnchor,null);
         this.targetAnchor = _.defaultTo(targetAnchor,null);
+        this.targetTurnLen = _.defaultTo(targetTurnLen,0);
+
         this.renderLine();
     }
 
@@ -123,10 +129,29 @@ class ConnectionFlowchart extends ConnectionLine{
         const [s_x,s_y] = this.sourceAnchorInfo;
         const [t_x,t_y] = this.targetAnchorInfo;
 
-        if(checkAnchors('Right','Left')) return [
-            [(s_x+t_x)/2,s_y],
-            [(s_x+t_x)/2,t_y]
-        ]
+        if(checkAnchors('Right','Left')) {
+            let middleX = this.targetTurnLen ? (t_x-this.targetTurnLen) : (s_x+t_x)/2
+            return [
+                [middleX,s_y],
+                [middleX,t_y]
+            ]
+        }
+        if(checkAnchors('Bottom','Left')) {
+            let middleX = this.targetTurnLen ? (t_x - this.targetTurnLen) : (s_x+t_x)/2;
+            return [
+                [s_x,s_y+this.targetTurnLen],
+                [middleX,s_y+this.targetTurnLen],
+                [middleX,t_y]
+            ]
+        }
+        if(checkAnchors('Top','Left')) {
+            let middleX = this.targetTurnLen ? (t_x - this.targetTurnLen) : (s_x+t_x)/2;
+            return [
+                [s_x,s_y-this.targetTurnLen],
+                [middleX,s_y-this.targetTurnLen],
+                [middleX,t_y]
+            ]
+        }
         throw new Error('ConnectionFlowchart报错：暂未设置对应的targetAnchor或sourceAnchor处理')
     }
 }
