@@ -66,11 +66,9 @@ class ConnectionLine{
     }
 
     get lineInfo() {
-        const [s_x,s_y] = this.sourceAnchorInfo;
-        const [t_x,t_y] = this.targetAnchorInfo;
         return [
-            [s_x,s_y],
-            [t_x,t_y]
+            this.sourceAnchorInfo,
+            this.targetAnchorInfo
         ];
     }
 
@@ -106,5 +104,29 @@ class ConnectionLine{
 class ConnectionFlowchart extends ConnectionLine{
     static create(...params){
         return new ConnectionFlowchart(...params);
+    }
+
+    get lineInfo() {
+        // console.log(this.sourceNextAnchor,this.targetPrevAnchor);
+        return [
+            this.sourceAnchorInfo,
+            ...this.middleAnchors,
+            this.targetAnchorInfo
+        ];
+    }
+
+    get middleAnchors() {
+        const  checkAnchors = (sourceKey,targetKey) => {
+            return (this.sourceAnchor === sourceKey) && (this.targetAnchor === targetKey);
+        }
+
+        const [s_x,s_y] = this.sourceAnchorInfo;
+        const [t_x,t_y] = this.targetAnchorInfo;
+
+        if(checkAnchors('Right','Left')) return [
+            [(s_x+t_x)/2,s_y],
+            [(s_x+t_x)/2,t_y]
+        ]
+        throw new Error('ConnectionFlowchart报错：暂未设置对应的targetAnchor或sourceAnchor处理')
     }
 }

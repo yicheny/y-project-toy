@@ -25,7 +25,7 @@ export function Grid({grid,items,onChangeLocation}){
                                     {item ? <div className={clsx('item',item.className) }
                                                  onMouseEnter={()=>defaultFn(item.onMouseEnter)([x,y])}
                                                  onMouseLeave={()=>defaultFn(item.onMouseLeave)([x,y])}
-                                                 id={item.id}/> : null}
+                                                 id={item.id}>{item.children}</div> : null}
                             </DragItem>
                         })
                     }
