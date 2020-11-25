@@ -9,7 +9,7 @@ const defaultFn = fp.defaultTo(()=>{});
 export function Grid({grid,items,onChangeLocation}){
     const dragObjRef = useRef();
 
-    return <div className='y-gird'>
+    return <div className='y-grid'>
         {
             _.map(grid,(row,y)=>{
                 return <div className='row' key={y}>

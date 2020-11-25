@@ -3,7 +3,7 @@ import Line from "../utils/Line";
 import WindowBox from "../utils/WindowBox";
 
 export default class Connection{
-    constructor({ options, type, targetTurnLen }) {
+    constructor({ options, type, targetTurnLen,lineColor,lineWidth }) {
         this.canvas = document.createElement('canvas');
         this.canvas.width  = 2000;//这里获取body动态尺寸进行设置或许会更好一些？
         this.canvas.height = 2000;
@@ -13,7 +13,9 @@ export default class Connection{
         this.options = options;
         this.lineParams = {
             canvas:this.canvas,
-            targetTurnLen
+            targetTurnLen,
+            lineColor,
+            lineWidth
         }
         this.render();
     }
@@ -56,13 +58,15 @@ class ConnectionFactory{
 
 //子类
 class ConnectionLine{
-    constructor({canvas,sourceId,targetId,sourceAnchor,targetAnchor,targetTurnLen}) {
+    constructor({canvas,sourceId,targetId,sourceAnchor,targetAnchor,targetTurnLen,lineColor,lineWidth}) {
         this.canvas = canvas;
         this.source = document.getElementById(sourceId);
         this.target = document.getElementById(targetId);
         this.sourceAnchor = _.defaultTo(sourceAnchor,null);
         this.targetAnchor = _.defaultTo(targetAnchor,null);
         this.targetTurnLen = _.defaultTo(targetTurnLen,0);
+        this.color = lineColor;
+        this.width = lineWidth;
 
         this.renderLine();
     }
@@ -97,7 +101,7 @@ class ConnectionLine{
 
     renderLine = ()=>{
         const [head,...tails] = this.lineInfo;
-        const line = Line.create({canvas:this.canvas,x:head[0],y:head[1]});
+        const line = Line.create({canvas:this.canvas,x:head[0],y:head[1],color:this.color,width:this.width});
         return _.forEach(tails,(o,i)=>{
             const [x,y] = o;
             if(i===tails.length-1) return line.to(x,y).end();

@@ -7,6 +7,24 @@ import _ from "lodash";
 
 const anchorOps = ['Top','Right','Bottom','Left','Center'].map(x=>({text:x,value:x}));
 
+const lineOps = [
+    {text:'直线（默认）',value:'line'},
+    {text:'折线',value:'flow'},
+]
+
+const colorOps = [
+    {text:'灰色',value:'gray'},
+    {text:'红色',value:'red'},
+    {text:'蓝色',value:'blue'},
+    {text:'绿色',value:'green'},
+]
+
+const sizeOps = [
+    {text:'1px',value:1},
+    {text:'2px',value:2},
+    {text:'3px',value:3},
+]
+
 const getInitItems = function (){
     return _.cloneDeep( [
         {x:0,y:4,id:'x0',children:'x0'},
@@ -28,6 +46,9 @@ function CanvasConnection(props) {
     const [items,setItems] = useState(initItems);
     const [sourceAnchor,setSourceAnchor] = useState('Right');
     const [targetAnchor,setTargetAnchor] = useState('Left');
+    const [type,setType] = useState('flow');
+    const [color,setColor] = useState('gray');
+    const [size,setSize] = useState(2);
 
     const grid = useMemo(()=>{
         return createGrid({cols:10,rows:10,items});
@@ -48,19 +69,24 @@ function CanvasConnection(props) {
                 {sourceId:'x8', targetId:'x9', sourceAnchor: 'Right',targetAnchor: 'Left'},
                 {sourceId:'x9', targetId:'x10', sourceAnchor: 'Right',targetAnchor: 'Left'},
                 {sourceId:'x2', targetId:'x10', sourceAnchor: 'Right',targetAnchor: 'Left'},
-                {sourceId:'x5', targetId:'x9', sourceAnchor: 'Bottom',targetAnchor: 'Left'},
-                {sourceId:'x4', targetId:'x9', sourceAnchor: 'Top',targetAnchor: 'Left'},
+                {sourceId:'x5', targetId:'x9', sourceAnchor: 'Bottom',targetAnchor: 'Left',lineColor: 'blue'},
+                {sourceId:'x4', targetId:'x9', sourceAnchor: 'Top',targetAnchor: 'Left',lineColor:'red'},
             ],
-            type:'flow',
+            type,
             targetTurnLen:60,
+            lineColor:color,
+            lineWidth:size
         });
         return connect.clear;
-    },[sourceAnchor,targetAnchor,items])
+    },[sourceAnchor,targetAnchor,items,type,color,size]);
 
     return (<div className='CanvasConnection'>
         <div className="inputs">
             起始点方向：<Select disabled options={anchorOps} defaultValue={sourceAnchor} onChange={setSourceAnchor}/>
             目标点方向：<Select disabled options={anchorOps} defaultValue={targetAnchor} onChange={setTargetAnchor}/>
+            线的类型：<Select options={lineOps} defaultValue={type} onChange={setType}/>
+            颜色：<Select options={colorOps} defaultValue={color} onChange={setColor}/>
+            线宽：<Select options={sizeOps} defaultValue={size} onChange={setSize}/>
         </div>
         <div className="gridWrap">
             <Grid grid={grid} items={items} onChangeLocation={onChangeLocation}/>

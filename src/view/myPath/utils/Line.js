@@ -4,7 +4,7 @@ export default class Line{
     constructor({canvas,x,y,unitLen,unitLenX,unitLenY,color,width}) {
         if(canvas.getContext){
             this.ctx = canvas.getContext('2d');
-            this.ctx.strokeStyle = _.defaultTo(color,'#000');
+            this.ctx.strokeStyle = _.defaultTo(color,'gray');
             this.ctx.lineWidth = _.defaultTo(width,1);
             this.startCoordinate = [x,y];
             this.coordinates = [];
