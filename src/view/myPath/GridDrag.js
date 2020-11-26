@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import _ from 'lodash';
-import { createGrid, Grid } from "./utils/Grid";
+import { createGrid, Grid } from "./Component/Grid";
 import ConnectionPath from "./utils/ConnectionPath";
 import './GridDrag.scss';
 import { uniqKeyFor } from "../../utils/publickFun";

@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import './GridView.scss';
 import ConnectionPath from "./utils/ConnectionPath";
-import { createGrid, Grid } from "./utils/Grid";
+import { createGrid, Grid } from "./Component/Grid";
 
 function GridView(props) {
     const items = useMemo(()=>{

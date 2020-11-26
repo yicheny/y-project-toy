@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import Connection from "./Connection";
+import Connection from "../utils/Connection";
 import clsx from "clsx";
 import './ConnectionContainer.scss';
 import _ from "lodash";
