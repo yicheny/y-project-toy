@@ -1,6 +1,6 @@
 import _ from 'lodash'
-import Line from "../utils/Line";
-import WindowBox from "../utils/WindowBox";
+import Line from "./Line";
+import WindowBox from "./WindowBox";
 
 export default class Connection{
     constructor({ options, type, targetTurnLen,lineColor,lineWidth }) {

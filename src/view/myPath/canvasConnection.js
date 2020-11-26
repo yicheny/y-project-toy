@@ -3,7 +3,7 @@ import './canvasConnection.scss';
 import { message, Select } from "y-ui0";
 import { createGrid, Grid } from "./utils/Grid";
 import _ from "lodash";
-import ConnectionContainer from "./utils_retain/ConnectionContainer";
+import ConnectionContainer from "./utils/ConnectionContainer";
 
 const anchorOps = ['Top','Right','Bottom','Left','Center'].map(x=>({text:x,value:x}));
 
