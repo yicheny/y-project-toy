@@ -19,6 +19,11 @@ const colorOps = [
     {text:'绿色',value:'green'},
 ]
 
+const draggableOps = [
+    {text:'是',value:true},
+    {text:'否',value:false},
+]
+
 const sizeOps = [
     {text:'1px',value:1},
     {text:'2px',value:2},
@@ -49,6 +54,7 @@ function CanvasConnection(props) {
     const [type,setType] = useState('flow');
     const [color,setColor] = useState('gray');
     const [size,setSize] = useState(2);
+    const [draggable,setDraggable] = useState(true);
 
     const grid = useMemo(()=>{
         return createGrid({cols:10,rows:10,items});
@@ -81,15 +87,21 @@ function CanvasConnection(props) {
 
     return (<div className='CanvasConnection'>
         <div className="inputs">
-            起始点方向：<Select disabled options={anchorOps} defaultValue={sourceAnchor} onChange={setSourceAnchor}/>
-            目标点方向：<Select disabled options={anchorOps} defaultValue={targetAnchor} onChange={setTargetAnchor}/>
-            线的类型：<Select options={lineOps} defaultValue={type} onChange={setType}/>
-            颜色：<Select options={colorOps} defaultValue={color} onChange={setColor}/>
-            线宽：<Select options={sizeOps} defaultValue={size} onChange={setSize}/>
+            <div>
+                起始点方向：<Select disabled options={anchorOps} defaultValue={sourceAnchor} onChange={setSourceAnchor}/>
+                目标点方向：<Select disabled options={anchorOps} defaultValue={targetAnchor} onChange={setTargetAnchor}/>
+            </div>
+
+            <div>
+                线的类型：<Select options={lineOps} defaultValue={type} onChange={setType}/>
+                颜色：<Select options={colorOps} defaultValue={color} onChange={setColor}/>
+                线宽：<Select options={sizeOps} defaultValue={size} onChange={setSize}/>
+                是否可拖拽：<Select options={draggableOps} defaultValue={draggable} onChange={setDraggable}/>
+            </div>
         </div>
         <div className="gridWrap">
             <ConnectionContainer params={getConnectionParams()}>
-                <Grid grid={grid} items={items} onChangeLocation={onChangeLocation}/>
+                <Grid draggable={draggable} grid={grid} items={items} onChangeLocation={onChangeLocation}/>
             </ConnectionContainer>
         </div>
     </div>);

@@ -6,7 +6,7 @@ import clsx from "clsx";
 
 const defaultFn = fp.defaultTo(()=>{});
 
-export function Grid({grid,items,onChangeLocation}){
+export function Grid({grid,items,onChangeLocation,draggable}){
     const dragObjRef = useRef();
 
     return <div className='y-grid'>
@@ -19,6 +19,7 @@ export function Grid({grid,items,onChangeLocation}){
                                 return item.x === x && item.y === y;
                             });
                             return <DragItem className={`col x-${x} y-${y}`}
+                                             draggable={draggable}
                                              dragObjRef={dragObjRef} value={{x,y,id:_.get(item,'id')}}
                                              changeOrder={_.defaultTo(onChangeLocation,()=>{})}
                                              y={y} x={x} key={x}>
@@ -34,6 +35,9 @@ export function Grid({grid,items,onChangeLocation}){
         }
     </div>
 }
+Grid.defaultProps = {
+    draggable:true
+}
 
 export function createGrid({cols=9,rows=9,items}){
     const res = _.times(rows,()=>_.times(cols,()=>0));
@@ -47,9 +51,9 @@ export function createGrid({cols=9,rows=9,items}){
 
 //
 function DragItem(props){
-    const {children,value,changeOrder,dragObjRef,className,x,y} = props;
+    const {children,value,changeOrder,dragObjRef,className,x,y,draggable} = props;
 
-    return <div className={clsx("dragItem",className)}
+    return <div className={clsx("dragItem",{draggable},className)}
                 data-x={x}
                 data-y={y}
                 draggable={!!children}

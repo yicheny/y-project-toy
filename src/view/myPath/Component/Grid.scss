@@ -6,7 +6,11 @@
   >.row{
     flex:1;
     display: flex;
-    >.col{
+    >.col.dragItem{
+      &.draggable{
+        pointer-events: initial;
+      }
+      pointer-events: none;
       flex:1;
       display: flex;
       align-items: center;
