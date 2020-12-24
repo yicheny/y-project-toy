@@ -3,8 +3,8 @@ import _ from "lodash";
 export default function findShortestPath({grid,source,target}){
     let shortestPath = null;
 
-    const max_x = grid.length - 1;
-    const max_y = grid[0].length - 1;
+    const max_x = grid[0].length - 1;
+    const max_y = grid.length - 1;
     const min_x = 0;
     const min_y = 0;
     const [t_x,t_y] = target;
