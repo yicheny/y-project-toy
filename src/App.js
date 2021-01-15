@@ -23,6 +23,7 @@ import CanvasConnection from "./view/myPath/canvasConnection";
 // import GridView from "./view/myPath/GridView";
 import GridDrag from "./view/myPath/GridDrag";
 import GridMuchNode from "./view/myPath/GridMuchNode";
+import EmptyLinks from "./view/myPath/EmptyLinks";
 
 const MENU_OPTION = {
   details:[
@@ -46,6 +47,7 @@ const MENU_OPTION = {
     // {text:'网格折线连接 GridView',to:'GridView'},
     {text:'网格拖动 GridDrag',to:'GridDrag'},
     {text:'多节点网格 GridMuchNode',to:'GridMuchNode'},
+    {text:'空白路径 EmptyLinks',to:'EmptyLinks'},
     /*{
       text:'G',
       expanded:true,
@@ -80,6 +82,7 @@ function App(props) {
         {/*<Route path='/GridView' component={GridView}/>*/}
         <Route path='/GridDrag' component={GridDrag}/>
         <Route path='/GridMuchNode' component={GridMuchNode}/>
+        <Route path='/emptyLinks' component={EmptyLinks}/>
         <Route path='/game/CreateRole' component={CreateRole}/>
         <Route component={Home}/>
       </Switch>
