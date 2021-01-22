@@ -88,43 +88,123 @@ export default class ConnectionPath{
                 // const validPath = path.slice(1,-1);
                 // if(validPath.length) pathQueens.push(validPath);
                 pathQueens.push(path);
-
                 const browerCroods = getElementBrowerCroods(path,acrossCroods);
                 const head = browerCroods.unshift();
-                const {ctx} = Line.create({canvas:this.canvas,x:head.x,y:head.y,width:2,color:isHl ? '#00FF00' : '#8f8f8f'});
+                const lineWidth = 2;
+                const {ctx} = Line.create({canvas:this.canvas,x:head.x,y:head.y,width:lineWidth,color:isHl ? '#00FF00' : '#8f8f8f'});
                 ctx.beginPath();
-                const radius = 5;
-                _.forEach(browerCroods,([x,y,acrossFlag],i)=>{
+                _.forEach(browerCroods,([x,y,acrossFlag],i,ary)=>{
                     if(i===0) ctx.moveTo(x,y);
-                    if(!acrossFlag) return ctx.lineTo(x,y);
-                    const [p_x,p_y] = browerCroods[i-1];
-                    // console.log(p_x,p_y,x,y)
-                    if(parseInt(p_x) === parseInt(x)) {//横
-                        if(parseInt(p_y)>parseInt(y)){//b->t
-                            // console.log('b->t');
-                            ctx.lineTo(x,y+radius);
-                            ctx.arc(x,y,radius,Math.PI*0.5,Math.PI*1.5,true);
-                        }else{
-                            // console.log('t->b');
-                            ctx.lineTo(x,y-radius);
-                            ctx.moveTo(x,y+radius);
-                            ctx.arc(x,y,radius,Math.PI*0.5,Math.PI*1.5,true);
-                            ctx.moveTo(x,y+radius);
+                    if(i===ary.length-1) return setLastAnchor();
+                    if(!acrossFlag) return setDefaultLine();
+                    setAcrossLine();
+
+                    function setLastAnchor(){
+                        setDirectionFuns(getLastAnchorFuns());
+
+                        function getLastAnchorFuns(){
+                            const unit = 4;
+                            const len = calcHypotenuse(unit);
+
+                            return { bottomToTop,topToBottom,rightToLeft,leftToRight }
+
+                            function bottomToTop(){
+                                ctx.lineTo(x,y+len)
+                                ctx.moveTo(x,y);
+                                ctx.lineTo(x-unit,y+len);
+                                ctx.lineTo(x+unit,y+len);
+                                ctx.lineTo(x,y);
+                            }
+
+                            function topToBottom(){
+                                ctx.lineTo(x,y-len)
+                                ctx.moveTo(x,y);
+                                ctx.lineTo(x-unit,y-len);
+                                ctx.lineTo(x+unit,y-len);
+                                ctx.lineTo(x,y);
+                            }
+
+                            function rightToLeft(){
+                                ctx.lineTo(x+len,y)
+                                ctx.moveTo(x,y);
+                                ctx.lineTo(x+len,y-unit);
+                                ctx.lineTo(x+len,y+unit);
+                                ctx.lineTo(x,y);
+                            }
+
+                            function leftToRight(){
+                                ctx.lineTo(x-len,y)
+                                ctx.moveTo(x,y);
+                                ctx.lineTo(x-len,y-unit);
+                                ctx.lineTo(x-len,y+unit);
+                                ctx.lineTo(x,y);
+                            }
+
+                            function calcHypotenuse(a) {
+                                return (Math.sqrt((a * a) * 4));
+                            }
+
                         }
-                    }else{
-                        if(parseInt(p_x)>parseInt(x)){//r->l
-                            // console.log('r->l');
-                            ctx.lineTo(x+radius,y);
-                            ctx.arc(x,y,radius,0,Math.PI,true);
+                    }
+
+                    function setDefaultLine(){
+                        ctx.lineTo(x,y);
+                    }
+
+                    function setAcrossLine(){
+                        // console.log(p_x,p_y,x,y)
+                        setDirectionFuns(getAcrossFuns());
+
+                        function getAcrossFuns(){
+                            const radius = 5;
+                            return { bottomToTop,topToBottom,rightToLeft,leftToRight }
+
+                            function bottomToTop(){
+                                ctx.lineTo(x,y+radius);
+                                ctx.arc(x,y,radius,Math.PI*0.5,Math.PI*1.5,true);
+                            }
+
+                            function topToBottom(){
+                                ctx.lineTo(x,y-radius);
+                                ctx.moveTo(x,y+radius);
+                                ctx.arc(x,y,radius,Math.PI*0.5,Math.PI*1.5,true);
+                                ctx.moveTo(x,y+radius);
+                            }
+
+                            function rightToLeft(){
+                                ctx.lineTo(x+radius,y);
+                                ctx.arc(x,y,radius,0,Math.PI,true);
+                            }
+
+                            function leftToRight(){
+                                ctx.lineTo(x-radius,y);
+                                ctx.moveTo(x+radius,y);
+                                ctx.arc(x,y,radius,0,Math.PI,true);
+                                ctx.moveTo(x+radius,y);
+                            }
+                        }
+                    }
+
+
+                    function setDirectionFuns({ bottomToTop,topToBottom,rightToLeft,leftToRight }){
+                        const [p_x,p_y] = browerCroods[i-1];
+
+                        if(parseInt(p_x) === parseInt(x)) {//横
+                            if(parseInt(p_y)>parseInt(y)){//b->t
+                                bottomToTop();
+                            }else{
+                                topToBottom();
+                            }
                         }else{
-                            // console.log('l->r');
-                            ctx.lineTo(x-radius,y);
-                            ctx.moveTo(x+radius,y);
-                            ctx.arc(x,y,radius,0,Math.PI,true);
-                            ctx.moveTo(x+radius,y);
+                            if(parseInt(p_x)>parseInt(x)){//r->l
+                                rightToLeft();
+                            }else{
+                                leftToRight();
+                            }
                         }
                     }
                 });
+
                 ctx.stroke();
             })
         }catch(e){
