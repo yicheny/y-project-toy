@@ -56,6 +56,7 @@ export default class ConnectionPath{
 
     render = ()=>{
         try{
+            if(_.isNil(this.connectList) || _.isEmpty(this.connectList)) return ;
             const pathQueens = [];
             _.forEach(this.renderList,(o)=>{
                 const {x1, y1, x2, y2,isHl} = o;
