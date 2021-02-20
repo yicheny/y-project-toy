@@ -24,6 +24,8 @@ import CanvasConnection from "./view/myPath/canvasConnection";
 import GridDrag from "./view/myPath/GridDrag";
 import GridMuchNode from "./view/myPath/GridMuchNode";
 import EmptyLinks from "./view/myPath/EmptyLinks";
+import ComponentRender from "./view/RenderTest/ComponentRender/ComponentRender";
+import FunctionRender from "./view/RenderTest/FunctionRender/FunctionRender";
 
 const MENU_OPTION = {
   details:[
@@ -48,6 +50,8 @@ const MENU_OPTION = {
     {text:'网格拖动 GridDrag',to:'GridDrag'},
     {text:'多节点网格 GridMuchNode',to:'GridMuchNode'},
     {text:'空白路径 EmptyLinks',to:'EmptyLinks'},
+    {text:'组件渲染测试',to:'/render-test/component-render'},
+    {text:'函数生成实例渲染测试',to:'/render-test/function-render'}
     /*{
       text:'G',
       expanded:true,
@@ -84,6 +88,8 @@ function App(props) {
         <Route path='/GridMuchNode' component={GridMuchNode}/>
         <Route path='/emptyLinks' component={EmptyLinks}/>
         <Route path='/game/CreateRole' component={CreateRole}/>
+        <Route path='/render-test/component-render' component={ComponentRender}/>
+        <Route path='/render-test/function-render' component={FunctionRender}/>
         <Route component={Home}/>
       </Switch>
     </div>

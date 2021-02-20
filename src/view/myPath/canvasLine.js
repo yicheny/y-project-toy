@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import Line from "./utils/Line";
+// import Line from "./utils/Line";
 
 function CanvasLine(props) {
     useEffect(()=>{
