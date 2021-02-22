@@ -1,0 +1,56 @@
+.history-log{
+  &.last{
+    .history-log-sep{
+      >.tail{
+        border:none;
+      }
+    }
+    .history-log-main{
+      >.content{
+        border:none;
+      }
+    }
+  }
+
+  display: flex;
+  line-height: 32px;
+  &-date,&-title{
+    display: flex;
+    justify-content: center;
+    padding-top:16px
+  }
+
+  &-date{
+    width:120px;
+  }
+
+  &-title{
+    width:120px;
+  }
+
+  &-sep{
+    >.mark{
+      margin-top:28px;
+      width:5px;
+      height:5px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 2px solid #5477FF;
+    }
+    >.tail{
+      height:100%;
+      margin-left: 4px;
+      border-left: 1px dashed #D0D3E3;
+    }
+  }
+
+  &-main{
+    flex:1;
+    padding-left:24px;
+    border-left:1px solid #E9EAF2;
+    >.content{
+      padding:12px 32px 12px 0;
+      border-bottom:1px solid #E9EAF2;
+    }
+  }
+}

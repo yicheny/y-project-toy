@@ -27,6 +27,7 @@ import EmptyLinks from "./view/myPath/EmptyLinks";
 import ComponentRender from "./view/RenderTest/ComponentRender/ComponentRender";
 import FunctionRender from "./view/RenderTest/FunctionRender/FunctionRender";
 import ModeRender from "./view/RenderTest/ModeRender/ModeRender";
+import HistoryLogView from "./view/Components/HistoryLogView";
 
 const MENU_OPTION = {
   details:[
@@ -48,6 +49,7 @@ const MENU_OPTION = {
         {text:"列拖拽调整尺寸",to:'/component/columns-resize'},
         {text:'树形控件',to:'/component/tree-view'},
         {text:'跑马灯 Carousel',to:'/component/carousel'},
+        {text:'历史日志 HistoryLog',to:'/component/history-log'},
       ]
     },
     {
@@ -100,6 +102,7 @@ function App(props) {
         <Route path='/component/columns-resize' component={ColumnsResize}/>
         <Route path='/component/tree-view' component={TreeView}/>
         <Route path='/component/carousel' component={Carousel}/>
+        <Route path='/component/history-log' component={HistoryLogView}/>
 
         <Route path='/feature-test/event-drag-test' component={EventDragTest}/>
         <Route path='/feature-test/event-drag-row-test' component={EventDragRowTest}/>
