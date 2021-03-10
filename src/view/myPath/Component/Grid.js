@@ -6,10 +6,10 @@ import clsx from "clsx";
 
 const defaultFn = fp.defaultTo(()=>{});
 
-export function Grid({grid,items,onChangeLocation,draggable}){
+export function Grid({grid,items,onChangeLocation,draggable,groupName}){
     const dragObjRef = useRef();
 
-    return <div className='y-grid'>
+    return <div className='y-grid' id={groupName}>
         {
             _.map(grid,(row,y)=>{
                 return <div className='row' key={y}>
@@ -18,11 +18,11 @@ export function Grid({grid,items,onChangeLocation,draggable}){
                             const item = _.find(items,item=>{
                                 return item.x === x && item.y === y;
                             });
-                            return <DragItem className={`col x-${x} y-${y}`}
+                            return <DragItem className={`col x-${x} y-${y} ${groupName}`}
                                              draggable={draggable}
                                              dragObjRef={dragObjRef} value={{x,y,id:_.get(item,'id')}}
                                              changeOrder={_.defaultTo(onChangeLocation,()=>{})}
-                                             y={y} x={x} key={x}>
+                                             y={y} x={x} groupName={groupName} key={x}>
                                     {item ? <div className={clsx('item',item.className) }
                                                  onMouseEnter={()=>defaultFn(item.onMouseEnter)([x,y])}
                                                  onMouseLeave={()=>defaultFn(item.onMouseLeave)([x,y])}
@@ -51,11 +51,12 @@ export function createGrid({cols=9,rows=9,items}){
 
 //
 function DragItem(props){
-    const {children,value,changeOrder,dragObjRef,className,x,y,draggable} = props;
+    const {children,value,changeOrder,dragObjRef,className,x,y,groupName,draggable} = props;
 
     return <div className={clsx("dragItem",{draggable},className)}
                 data-x={x}
                 data-y={y}
+                data-group={groupName}
                 draggable={!!children}
                 onDragStart={e=>handleDragStart(e,value)}
                 onDragEnter={e=>handleDragEnter(e,value)}

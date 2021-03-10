@@ -22,6 +22,27 @@ function getSameNodeIndex(path,targetNode){
 //3. 箭头
 //4. 线点击事件
 
+class ConnectionCanvas{
+    constructor(wrapElement) {
+        this._canvas = document.createElement('canvas');
+        if(wrapElement){
+            const info = wrapElement.getBoundingClientRect();
+            this._canvas.width  = info.width;
+            this._canvas.height = info.height;
+            this._canvas.style.position = 'fixed';
+            this._canvas.style.top = info.top + 'px';
+            this._canvas.style.left = info.left + 'px';
+        }else{
+            this._canvas.width  = 2000;//这里获取body动态尺寸进行设置或许会更好一些？
+            this._canvas.height = 2000;
+        }
+    }
+
+    get canvas(){
+        return this._canvas;
+    }
+}
+
 function checkAcross(prev1,next1,prev2,next2){
     if(!isSameDirection(prev1,next1) || !isSameDirection(prev2,next2)) return false;
     return !(isSameNode(prev1,prev2) || isSameNode(prev1,next2) || isSameNode(next1,prev2) || isSameNode(next1,next2))
@@ -32,8 +53,8 @@ function isSameDirection(n1,n2){
 }
 
 export default class ConnectionPath{
-    constructor({grid,connectList,onError,hlCrood}) {
-        this.initCanvas();
+    constructor({grid,connectList,onError,hlCrood,groupName}) {
+        this.initCanvas(groupName);
 
         this.grid = grid;
         this.connectList = connectList;
@@ -47,10 +68,9 @@ export default class ConnectionPath{
         return new ConnectionPath(...params);
     }
 
-    initCanvas = () => {
-        this.canvas = document.createElement('canvas');
-        this.canvas.width  = 2000;//这里获取body动态尺寸进行设置或许会更好一些？
-        this.canvas.height = 2000;
+    initCanvas = (groupName) => {
+        const wrapElement = document.getElementById(groupName);
+        this.canvas = (new ConnectionCanvas(wrapElement)).canvas;
         this.windowBox = WindowBox.create(this.canvas);
     }
 
@@ -59,7 +79,7 @@ export default class ConnectionPath{
             if(_.isNil(this.connectList) || _.isEmpty(this.connectList)) return ;
             const pathQueens = [];
             _.forEach(this.renderList,(o)=>{
-                const {x1, y1, x2, y2,isHl} = o;
+                const {x1, y1, x2, y2,isHl,group} = o;
                 const path = this.getPath({ x1, y1, x2, y2 });
                 const acrossCroods = [];
                 path.forEach((node,i)=>{
@@ -89,7 +109,8 @@ export default class ConnectionPath{
                 // const validPath = path.slice(1,-1);
                 // if(validPath.length) pathQueens.push(validPath);
                 pathQueens.push(path);
-                const browerCroods = getElementBrowerCroods(path,acrossCroods);
+                const browerCroods = getElementBrowerCroods(path,acrossCroods,group);
+                this.adjustOffset(browerCroods);
                 const head = browerCroods.unshift();
                 const lineWidth = 2;
                 const {ctx} = Line.create({canvas:this.canvas,x:head.x,y:head.y,width:lineWidth,color:isHl ? '#00FF00' : '#8f8f8f'});
@@ -214,15 +235,28 @@ export default class ConnectionPath{
         }
     }
 
+    //根据画布位置调整连线
+    adjustOffset(browerCroods){
+        let {left,top} = this.canvas.style || {};
+        if([left,top].some(_.isNil)) return ;
+        left = Number(left.slice(0,-2));
+        top = Number(top.slice(0,-2));
+        _.forEach(browerCroods,x=>{
+            x[0] = x[0]-left;
+            x[1] = x[1]-top;
+            return x;
+        })
+    }
+
     get renderList(){
         const [h_x,h_y] = this.hlCrood || [-1,-1];
         const hlConnectList = [];
         const normalConnectList = [];
 
         _.forEach(this.connectList,o=>{
-            const [x1, y1, x2, y2] = getCroods(o);
+            const [x1, y1, x2, y2,group] = getCroods(o);
             const isHl = (x1===h_x && y1 === h_y) || (x2===h_x && y2 === h_y);
-            const info = {x1,y1,x2,y2,isHl};
+            const info = {x1,y1,x2,y2,group,isHl};
             return isHl ? hlConnectList.push(info) : normalConnectList.push(info);
         })
 
@@ -249,12 +283,12 @@ function getCroods(o){
     const source = document.getElementById(sourceId);
     const target = document.getElementById(targetId);
     if(!source || !target) throw new Error('ConnectionPath抛错：指定元素不存在！');
-    const {x:s_x,y:s_y} = source.parentElement.dataset;
+    const {x:s_x,y:s_y,group} = source.parentElement.dataset;
     const {x:t_x,y:t_y} = target.parentElement.dataset;
-    return [Number(s_x),Number(s_y), Number(t_x),Number(t_y)]
+    return [Number(s_x),Number(s_y), Number(t_x),Number(t_y),group]
 }
 
-function getElementBrowerCroods(croods,acrossCroods){
+function getElementBrowerCroods(croods,acrossCroods,group){
     const addAcrossFlagCurry = _.curry(function addAcrossFlag(x,y,list){
         list.push(hasSameNode(acrossCroods,[x,y]));
         return list;
@@ -263,7 +297,7 @@ function getElementBrowerCroods(croods,acrossCroods){
     const max = croods.length - 1;
     return _.reduce(croods,(acc,crood,i)=>{
         const [x,y] = crood || [];
-        const element = document.querySelector(`.x-${x}.y-${y}`);
+        const element = document.querySelector(`.x-${x}.y-${y}.${group}`);
         if(!element) return acc;
         const info = element.getBoundingClientRect();
 

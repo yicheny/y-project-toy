@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import Connection from "../utils/Connection";
+// import Connection from "../utils/Connection";
 import clsx from "clsx";
 import './ConnectionContainer.scss';
 import _ from "lodash";
+import ConnectionPath from "../utils/ConnectionPath";
 
 function ConnectionContainer({ params,children,className,style}) {
     const containerRef = useRef();
@@ -10,7 +11,7 @@ function ConnectionContainer({ params,children,className,style}) {
 
     useEffect(()=>{
         return resizeObserverInit({
-            callback:()=>Connection.create(params),
+            callback:()=>ConnectionPath.create(params),
             targetNode:containerRef.current,
             unmountRef,
         })

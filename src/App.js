@@ -28,6 +28,7 @@ import ComponentRender from "./view/RenderTest/ComponentRender/ComponentRender";
 import FunctionRender from "./view/RenderTest/FunctionRender/FunctionRender";
 import ModeRender from "./view/RenderTest/ModeRender/ModeRender";
 import HistoryLogView from "./view/Components/HistoryLogView";
+import ManyTopic from "./view/myPath/ManyTopic";
 
 const MENU_OPTION = {
   details:[
@@ -70,6 +71,7 @@ const MENU_OPTION = {
          {text:'网格拖动 GridDrag',to:'topo/grid-drag'},
          {text:'多节点网格 GridMuchNode',to:'topo/grid-much-node'},
          {text:'空白路径 EmptyLinks',to:'topo/empty-links'},
+         {text:'多个拓扑图同时渲染 ManyTopic',to:'topo/many-topic'},
        ]
     },
     {
@@ -120,6 +122,7 @@ function App(props) {
         <Route path='/topo/grid-drag' component={GridDrag}/>
         <Route path='/topo/grid-much-node' component={GridMuchNode}/>
         <Route path='/topo/empty-links' component={EmptyLinks}/>
+        <Route path='/topo/many-topic' component={ManyTopic}/>
 
         <Route path='/game/CreateRole' component={CreateRole}/>
 
