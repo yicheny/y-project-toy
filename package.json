@@ -11,11 +11,11 @@
     "echarts-for-react": "^2.0.16",
     "jsplumb": "^2.14.6",
     "lodash": "^4.17.20",
-    "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "sass": "^1.55.0",
     "y-live2d-widget": "0.0.2",
     "y-ui0": "0.0.14"
   },
