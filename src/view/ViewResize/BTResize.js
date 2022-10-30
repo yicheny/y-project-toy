@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import clsx from "clsx";
 import './BTResize.scss'
 
@@ -46,3 +46,42 @@ function BTResize(props) {
 }
 
 export default BTResize;
+
+function useDraggable(){
+    const [draggable,setDraggable] = useState(true);
+    const resizeRef = useRef();
+    const pointRef = useRef();
+    const containerRef = useRef();
+
+    const startDraggable = useCallback((e)=>{
+        setDraggable(true)
+        pointRef.current = e.clientY
+    },[])
+
+    const closeDraggable = useCallback(()=>{
+        setDraggable(false)
+        pointRef.current = null
+    },[])
+
+    const moveHandle = useCallback((e)=>{
+        if(!draggable) return ;
+        e.stopPropagation();
+        e.preventDefault();
+
+        const prevPoint = pointRef.current;
+        pointRef.current = e.clientY;
+        const offset = prevPoint - e.clientY;
+
+        resizeRef.current.style.height = `${resizeRef.current.scrollHeight + offset}px`
+    },[])
+
+    //注册事件
+    useEffect(()=>{
+        const container = containerRef.current;
+        if(container){
+
+        }
+    },[])
+
+    return {draggable,startDraggable,closeDraggable,moveHandle}
+}
